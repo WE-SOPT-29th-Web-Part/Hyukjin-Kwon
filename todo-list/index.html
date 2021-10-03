@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="style.css">
+  <title>My ToDo List</title>
+</head>
+<body>
+  <header class="header">
+    <h1>To Do List</h1>
+  </header>
+
+  <nav class="navBar">
+    <button class="navBar__today">오늘만 보기</button>
+    <button class="navBar__tommorow">내일만 보기</button>
+    <button class="navBar__both">함께 보기</button>
+  </nav>
+
+  <main class="todos">
+    <section class="todos__left">
+      <h2>오늘 할 일</h2>
+      <ul class="todos__items">
+        <li class="todos__item">
+          <div class="todos__btn-wrapper">
+            <span>HTML 배우기</span>
+            <button class="todos__remove-btn">
+              <img src="./assets/icon/trash-can.svg" alt="">
+            </button>
+          </div>
+        </li>
+        <li class="todos__item">
+          <div class="todos__btn-wrapper">
+            <span>CSS 배우기</span>
+            <button class="todos__remove-btn">
+              <img src="./assets/icon/trash-can.svg" alt="">
+            </button>
+          </div>
+        </li>
+      </ul>
+      <div class="todos__add-item">
+        <input type="text">
+        <button>+</button>
+      </div>
+      
+    </section>
+    <section class="todos__right">
+      <h2>내일 할 일</h2>
+      <ul class="todos__items">
+        <li class="todos__item">
+          <div class="todos__btn-wrapper">
+            <span>JavaScript 배우기</span>
+            <button class="todos__remove-btn">
+              <img src="./assets/icon/trash-can.svg" alt="">
+            </button>
+          </div>
+        </li>
+        <li class="todos__item">
+          <div class="todos__btn-wrapper">
+            <span>React 배우기</span>
+            <button class="todos__remove-btn">
+              <img src="./assets/icon/trash-can.svg" alt="">
+            </button>
+          </div>
+        </li>
+      </ul>
+      <div class="todos__add-item">
+        <input type="text">
+        <button class="todos__add-btn">
+          +
+        </button>
+      </div>
+    </section>
+
+    
+  </main>
+
+  <footer class="footer">
+    SOPT 29th Web Part
+  </footer>
+</body>
+</html>

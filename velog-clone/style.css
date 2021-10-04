@@ -1,0 +1,114 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  /* height: inherit; */
+  margin: 1% 15%;
+
+  padding-bottom: 10%;
+
+  background-color: rgba(248, 249, 250, 255);
+  font-size: 16px;
+}
+
+li,
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+h1,
+h2,
+h3 {
+  padding: 0;
+  margin: 0;
+}
+
+button:hover,
+.logo {
+  cursor: pointer;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.filters__lists {
+  display: flex;
+  gap: 1rem;
+
+  width: 100%;
+}
+
+.filters__list.menu {
+  margin-left: auto;
+}
+
+.velog {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 3%;
+}
+
+.velog__post {
+  display: flex;
+  flex-direction: column;
+
+  min-height: 400px;
+  overflow: hidden;
+
+  background-color: white;
+
+  border-radius: 4px;
+  box-shadow: rgb(0 0 0 / 4%) 0px 4px 16px 0px;
+}
+
+.velog__post:hover {
+  transform: translateY(-5px);
+  transition: transform 300ms ease-in;
+}
+
+.velog__post {
+  transform: translateY(5px);
+  transition: transform 300ms ease-in;
+}
+
+.velog__post-thumbnail > img {
+  max-width: 100%;
+}
+
+.velog__post-content {
+  flex: 1;
+
+  display: flex;
+  flex-direction: column;
+
+  padding: 1rem;
+}
+
+.velog__post-content > p {
+  flex: 1;
+  color: rgb(112, 112, 112);
+
+  font-size: 0.9rem;
+}
+.velog__post-content > div {
+  font-size: 0.8rem;
+  color: lightgray;
+}
+
+.velog__post-content > div > span:first-child:after {
+  content: " ・ ";
+}
+
+.velog__post-info {
+  display: flex;
+  justify-content: space-between;
+
+  padding: 1rem;
+  border-top: 1px solid rgba(248, 249, 250, 255);
+
+  font-size: 0.8rem;
+}

@@ -23,6 +23,8 @@ body {
   display: flex;
   flex-direction: column;
   gap: 1rem;
+
+  font-size: 20px;
 }
 
 a {
@@ -93,7 +95,7 @@ button:hover,
 
 .filters__lists {
   display: flex;
-
+  gap: 3rem;
   width: 100%;
 }
 
@@ -143,6 +145,7 @@ button:hover,
 
 .velog {
   display: grid;
+  grid-template-columns: repeat(var(--grid-columns-desktop), 1fr);
   grid-gap: 3% 1.5%;
 }
 
@@ -258,20 +261,6 @@ button:hover,
   color: lightgray;
 }
 
-@media screen and (max-width: 1920px) {
-  html,
-  body {
-    font-size: 20px;
-  }
-
-  .velog {
-    grid-template-columns: repeat(var(--grid-columns-desktop), 1fr);
-  }
-
-  .filters__lists {
-    gap: 3rem;
-  }
-}
 @media screen and (max-width: 1800px) {
   html,
   body {

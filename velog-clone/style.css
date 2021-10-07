@@ -62,6 +62,8 @@ button:hover,
 .header {
   display: flex;
   justify-content: space-between;
+
+  margin-bottom: 2.5%;
 }
 
 .header__btn-wrapper {
@@ -71,7 +73,9 @@ button:hover,
 }
 
 .header__searchBtn {
-  margin: auto;
+  display: flex;
+  align-items: center;
+  padding: 0;
 }
 
 .header__loginBtn {
@@ -91,13 +95,22 @@ button:hover,
   display: flex;
 
   width: 100%;
-  padding-left: 1rem;
 }
 
 .filters__list {
   display: flex;
   align-items: center;
   gap: 0.5rem;
+}
+
+.filters__list:hover {
+  cursor: pointer;
+}
+
+.menu > select,
+.options > select {
+  font-size: 1rem;
+  outline: 0;
 }
 
 .options {
@@ -130,7 +143,7 @@ button:hover,
 
 .velog {
   display: grid;
-  grid-gap: 4%;
+  grid-gap: 3% 1.5%;
 }
 
 .velog:hover {
@@ -160,15 +173,20 @@ button:hover,
 }
 
 .velog__post-thumbnail {
-  flex: 1.5;
+  width: 100%;
+  position: relative;
   overflow: hidden;
   border-radius: 4px 4px 0 0;
-  display: flex;
-  flex-basis: 150px;
+  padding-top: 60%;
 }
 
 .velog__post-thumbnail > img {
-  max-width: 100%;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  display: block;
   object-fit: cover;
 }
 
@@ -299,11 +317,12 @@ button:hover,
 @media screen and (max-width: 700px) {
   html,
   body {
-    font-size: 12px;
+    font-size: 14px;
   }
 
   .velog {
     grid-template-columns: repeat(var(--grid-columns-mobile), 1fr);
+    grid-gap: 1%;
   }
 
   .filters__lists {

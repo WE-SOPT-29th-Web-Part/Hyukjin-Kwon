@@ -2,6 +2,7 @@
   --main-bg-color: rgba(248, 249, 250, 255);
   --secondary-text: rgb(112, 112, 112);
   --button-bg-color: rgb(52, 58, 64);
+  --dropdown-selected-color: rgb(18, 184, 134);
   --grid-columns-desktop: 5;
   --grid-columns-s_desktop: 4;
   --grid-columns-laptop: 3;
@@ -165,6 +166,10 @@ button:hover,
 
 .filters__dropdown > li:hover {
   background-color: var(--main-bg-color);
+}
+
+.filters__dropdown > li.selected {
+  color: var(--dropdown-selected-color);
 }
 
 .menu .filters__dropdown {

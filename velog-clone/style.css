@@ -109,8 +109,58 @@ button:hover,
   cursor: pointer;
 }
 
-.menu > select,
-.options > select {
+.filters__dd-wrapper {
+  position: relative;
+  min-width: fit-content;
+}
+
+.filters__dd-current {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: white;
+  padding: 0.3rem 0.7rem;
+  border-radius: 4px;
+
+  box-shadow: rgb(0 0 0 / 5%) 0px 4px 16px 0px;
+
+  font-size: 0.8rem;
+}
+
+.filters__dd-current > span {
+  margin-right: 1rem;
+}
+.filters__dd-current > img {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.filters__dropdown {
+  position: absolute;
+  min-width: 192px;
+  top: calc(100% + 1rem);
+  background-color: white;
+  z-index: 456;
+
+  box-shadow: rgb(0 0 0 / 15%) 0px 4px 16px 0px;
+  font-size: 0.8rem;
+}
+
+.filters__dropdown > li {
+  padding: 0.7rem 1rem;
+  border-top: 1px solid lightgray;
+}
+
+.filters__dropdown > li:first-child {
+  border-top: 0;
+}
+
+.menu .filters__dropdown {
+  right: calc(100% - 1rem);
+}
+
+.menu > ul,
+.options > ul {
   font-size: 1rem;
   outline: 0;
 }
@@ -121,6 +171,7 @@ button:hover,
 
 .menu {
   margin-left: auto;
+  width: 1rem;
 }
 
 .trend,

@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <link rel="stylesheet" href="./style.css">
+    <script defer src="./main.js"></script>
     <title>my velog</title>
   </head>
 
@@ -39,22 +40,30 @@
           최신
         </li>
         <li class="filters__list options">
-          <select name="" id="">
-            <option value="">오늘</option>
-            <option value="">이번 주</option>
-            <option value="">이번 달</option>
-            <option value="">올해</option>
-          </select>
+          <div class="filters__dd-wrapper">
+            <div class="filters__dd-current">
+              <span>이번 주</span>
+              <img src="./assets/icon/point-down.svg" alt="point-down">
+            </div>
+            <ul class="filters__dropdown">
+              <li>오늘</li>
+              <li>이번 주</li>
+              <li>이번 달</li>
+              <li>올해</li>
+            </ul>
+          </div>
         </li>
         <li class="filters__list menu">
-          <select name="" id="">
-            <option value="" selected disabled>메뉴</option>
-            <option value="">공지사항</option>
-            <option value="">태그 목록</option>
-            <option value="">서비스 정책</option>
-            <option value="">Slack</option>
-            <option value="">문의</option>
-          </select>
+          <div class="filters__dd-wrapper">
+            <img src="./assets/icon/dot-menu.svg" alt="dot-menu">
+            <ul class="filters__dropdown">
+              <li>공지사항</li>
+              <li>태그 목록</li>
+              <li>서비스 정책</li>
+              <li>Slack</li>
+              <li>문의</li>
+            </ul>
+          </div>
         </li>
       </ul>
     </nav>

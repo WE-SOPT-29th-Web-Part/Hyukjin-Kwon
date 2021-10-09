@@ -56,11 +56,20 @@ button:hover {
   flex: 1;
 }
 
-.todos > section {
+section.extended {
+  transition: all 300ms ease-in;
+  width: 0;
+  visibility: hidden;
+}
+
+.todos__left,
+.todos__right {
+  width: 100%;
   display: flex;
   flex-direction: column;
   flex-grow: 1;
   background-color: rgba(216, 216, 216, 0.3);
+  transition: all 300ms ease-in;
 }
 
 .todos__left {
@@ -91,6 +100,10 @@ button:hover {
 .todos__add-item {
   display: flex;
   flex-direction: column;
+}
+
+.todos__add-btn {
+  font-size: 1.5rem;
 }
 
 .footer {

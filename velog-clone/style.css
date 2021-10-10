@@ -333,6 +333,49 @@ button:hover,
   color: lightgray;
 }
 
+body.modal-open {
+  overflow-y: hidden;
+}
+
+.modal {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  left: 0;
+  top: 0;
+
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+}
+
+.modal__content {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 50%;
+
+  z-index: 1001;
+
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.modal__closeBtn {
+  border-radius: 50%;
+  background-color: var(--button-bg-color);
+  color: white;
+
+  padding: 0.3rem 0.5rem;
+
+  text-align: center;
+
+  order: 1;
+}
+
 @media screen and (max-width: 1800px) {
   html,
   body {

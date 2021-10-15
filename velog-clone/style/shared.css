@@ -1,0 +1,43 @@
+:root {
+  --main-bg-color: rgba(248, 249, 250, 255);
+  --secondary-text: rgb(112, 112, 112);
+  --button-bg-color: rgb(52, 58, 64);
+  --tag-bg-color: rgb(241, 243, 245);
+  --dropdown-selected-color: rgb(18, 184, 134);
+  --grid-columns-desktop: 5;
+  --grid-columns-s_desktop: 4;
+  --grid-columns-laptop: 3;
+  --grid-columns-tablet: 2;
+  --grid-columns-mobile: 1;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+a {
+  text-decoration: none;
+  color: initial;
+}
+
+button {
+  background-color: transparent;
+  border: 0;
+}
+
+button:hover {
+  cursor: pointer;
+}
+
+li,
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+h1,
+h2,
+h3 {
+  padding: 0;
+  margin: 0;
+}

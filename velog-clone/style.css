@@ -56,6 +56,11 @@ button:hover,
   cursor: pointer;
 }
 
+.logo {
+  display: flex;
+  align-items: center;
+}
+
 .logo__squid {
   max-width: 20%;
   padding: 0 0.5rem;
@@ -81,7 +86,7 @@ button:hover,
   padding: 0;
 }
 
-.header__loginBtn {
+.header__newPostBtn {
   padding: 0.5rem 1rem;
   border-radius: 18px;
   color: white;
@@ -90,8 +95,21 @@ button:hover,
   min-width: fit-content;
 }
 
-.header__loginBtn:hover {
+.header__newPostBtn:hover {
   opacity: 0.6;
+}
+
+.header__userMenu {
+  display: flex;
+  align-items: center;
+}
+
+.header__userMenu > img {
+  border-radius: 50%;
+  overflow: hidden;
+
+  width: 2.5rem;
+  height: 2.5rem;
 }
 
 .filters__lists {

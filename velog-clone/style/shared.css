@@ -1,5 +1,6 @@
 :root {
   --main-bg-color: rgba(248, 249, 250, 255);
+  --dark-gray: rgba(88, 82, 78, 0.5);
   --secondary-text: rgb(112, 112, 112);
   --button-bg-color: rgb(52, 58, 64);
   --tag-bg-color: rgb(241, 243, 245);

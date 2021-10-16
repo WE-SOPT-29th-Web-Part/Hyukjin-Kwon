@@ -238,7 +238,7 @@ body {
   transform: translateX(-50%);
 
   width: 100%;
-  height: 0.15rem;
+  height: 3px;
 
   background: var(--button-bg-color);
 }
@@ -268,7 +268,7 @@ body {
   transform: translateX(-50%);
 
   width: 100%;
-  height: 0.15rem;
+  height: 2px;
 
   background: var(--button-bg-color);
 }
@@ -283,7 +283,8 @@ body {
   display: flex;
   gap: 1rem;
   overflow-x: hidden;
-
+  overflow-y: hidden;
+  padding-bottom: 2rem;
   position: relative;
 }
 
@@ -300,7 +301,7 @@ body {
   display: none;
   position: absolute;
   z-index: 2;
-  height: 100%;
+  height: calc(100% - 2rem);
   opacity: 0;
 }
 
@@ -312,6 +313,37 @@ body {
 .velog.slider .slider__right {
   display: block;
   right: 0;
+}
+
+.slider__index {
+  display: none;
+  position: absolute;
+}
+
+.velog.slider .slider__index {
+  margin: 0;
+  display: flex;
+  gap: 0.3rem;
+  bottom: 0;
+  left: 50%;
+  padding: 0.3rem;
+  border-radius: 10px;
+
+  transform: translateX(-50%);
+  background-color: lightgray;
+}
+
+.velog.slider .slider__index > li {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background-color: white;
+  border: 0;
+}
+
+.velog.slider .slider__index > li.current {
+  background-color: var(--dark-gray);
+  transform: scale(1.4);
 }
 
 .slider__left:hover,

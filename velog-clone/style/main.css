@@ -255,6 +255,24 @@ body {
   transform: translateY(-1px);
 }
 
+.filters__viewOptions > li.selected {
+  position: relative;
+}
+
+.filters__viewOptions > li.selected::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+
+  left: 50%;
+  transform: translateX(-50%);
+
+  width: 100%;
+  height: 0.15rem;
+
+  background: var(--button-bg-color);
+}
+
 .velog {
   display: grid;
   grid-template-columns: repeat(var(--grid-columns-desktop), 1fr);
@@ -265,18 +283,43 @@ body {
   display: flex;
   gap: 1rem;
   overflow-x: hidden;
+
+  position: relative;
 }
 
 .velog.slider .velog__post {
   transform: unset;
-
   display: inline-block;
-  flex-basis: calc(100% / 3 - 1rem);
+  flex-basis: calc((100% - 4rem) / 5);
   flex-shrink: 0;
 }
 
-.velog:hover {
-  cursor: pointer;
+.slider__left,
+.slider__right {
+  padding: 0 1rem;
+  display: none;
+  position: absolute;
+  z-index: 2;
+  height: 100%;
+  opacity: 0;
+}
+
+.velog.slider .slider__left {
+  display: block;
+  left: 0;
+}
+
+.velog.slider .slider__right {
+  display: block;
+  right: 0;
+}
+
+.slider__left:hover,
+.slider__right:hover {
+  opacity: 1;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 4px;
 }
 
 .velog__post {
@@ -297,14 +340,12 @@ body {
   transition: transform 300ms ease-in, box-shadow 300ms ease-in;
 
   box-shadow: rgb(0 0 0 / 15%) 0px 4px 16px 0px;
+  cursor: pointer;
 }
 
-body.modal-show .velog__post:hover {
-  transform: unset;
-}
-
-body.modal-show .velog__post {
-  transform: unset;
+.modal__content .velog__post,
+.modal__content .velog__post:hover {
+  transform: unset !important;
 }
 
 .velog__post-thumbnail {
@@ -449,6 +490,10 @@ body.modal-show {
     grid-template-columns: repeat(var(--grid-columns-s_desktop), 1fr);
   }
 
+  .velog.slider .velog__post {
+    flex-basis: calc((100% - 3rem) / 4);
+  }
+
   .filters__lists {
     gap: 2.5rem;
   }
@@ -461,6 +506,10 @@ body.modal-show {
 
   .velog {
     grid-template-columns: repeat(var(--grid-columns-laptop), 1fr);
+  }
+
+  .velog.slider .velog__post {
+    flex-basis: calc((100% - 2rem) / 3);
   }
 
   .filters__lists {
@@ -477,6 +526,10 @@ body.modal-show {
     grid-template-columns: repeat(var(--grid-columns-tablet), 1fr);
   }
 
+  .velog.slider .velog__post {
+    flex-basis: calc((100% - 1rem) / 2);
+  }
+
   .filters__lists {
     gap: 1.5rem;
   }
@@ -490,6 +543,10 @@ body.modal-show {
   .velog {
     grid-template-columns: repeat(var(--grid-columns-mobile), 1fr);
     grid-gap: 1%;
+  }
+
+  .velog.slider .velog__post {
+    flex-basis: 100%;
   }
 
   .filters__lists {

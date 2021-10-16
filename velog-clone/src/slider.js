@@ -11,27 +11,21 @@ let currentIndex = 0;
 let maxPostCount = 3;
 let initialPostList = null;
 
-const movePost = () => {
+const movePost = (direction) => {
+  if (slidePostList.length - maxPostCount <= currentIndex && direction > 0) return false;
+  if (!currentIndex && direction < 0) return false;
+
+  slidePagination.childNodes[currentIndex].classList.remove('current');
+
+  currentIndex += direction;
   slidePostList.forEach((post) => {
     post.style.transform = `translateX(calc(-${100 * currentIndex}% - ${currentIndex}rem))`;
   });
-}
-
-const moveRight = () => {
-  if (slidePostList.length - maxPostCount <= currentIndex) return false;
-  slidePagination.childNodes[currentIndex].classList.remove('current');
-  currentIndex += 1;
-  movePost();
   slidePagination.childNodes[currentIndex].classList.add('current');
 }
 
-const moveLeft = () => {
-  if (!currentIndex) return false;
-  slidePagination.childNodes[currentIndex].classList.remove('current');
-  currentIndex -= 1;
-  movePost();
-  slidePagination.childNodes[currentIndex].classList.add('current');
-}
+const moveLeft = () => movePost(-1);
+const moveRight = () => movePost(1);
 
 const applyResponsivePostCount = () => {
   const width = window.innerWidth;
@@ -43,6 +37,11 @@ const applyResponsivePostCount = () => {
 }
 
 const createPagination = (pageNum) => {
+  if (slidePagination.childNodes.length) {
+    slidePagination.childNodes[0].classList.add('current');
+    return;
+  }
+  
   for(let i = 0; i <= pageNum - maxPostCount; i++) {
     const li = document.createElement('li');
     if (!i) li.classList.add('current');
@@ -66,7 +65,11 @@ const initializeSlide = () => {
 
 const cleanUpSlide = () => {
   slidePostList.forEach((post, idx) => post.replaceWith(initialPostList[idx]));
+  slidePagination.childNodes.forEach((child) => child.classList.remove('current'));
   currentIndex = 0;
+
+  leftSlideBtn.removeEventListener('click', moveLeft);
+  rightSlideBtn.removeEventListener('click', moveRight);
 }
 
 window.addEventListener('resize', applyResponsivePostCount);

@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="./style/shared.css">
     <link rel="stylesheet" href="./style/main.css">
     <script defer src="./src/dropdown.js"></script>
+    <script defer src="./src/slider.js"></script>
+    <script defer src="./src/darkMode.js"></script>
     <script defer src="./src/modal.js"></script>
     <title>my velog</title>
   </head>
@@ -33,6 +35,7 @@
         <button class="header__searchBtn">
           <img src="./assets/icon/search.svg" alt="searchBtn">
         </button>
+        <span class="header__modeToggle sun"></span>
         <a class="header__newPostBtn" href="input.html">
           새 글 작성
         </a>
@@ -79,6 +82,14 @@
             </ul>
           </div>
         </li>
+      </ul>
+      <ul class="filters__viewOptions">
+        <li class="filters__grid">
+          <img src="./assets/icon/grid.svg" alt="grid">
+        </li>
+        <li class="filters__slider">
+          <img src="./assets/icon/film.svg" alt="slider">
+        </li>  
       </ul>
     </nav>
 

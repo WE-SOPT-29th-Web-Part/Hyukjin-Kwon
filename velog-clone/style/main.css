@@ -7,7 +7,6 @@ body {
 
   display: flex;
   flex-direction: column;
-  gap: 1rem;
 
   font-size: 20px;
 }
@@ -32,6 +31,57 @@ body {
   justify-content: space-between;
 
   margin-bottom: 2.5%;
+}
+
+.header__modeToggle {
+  width: 4rem;
+  height: 2rem;
+  border-radius: 18px;
+  background-color: var(--secondary-text);
+  position: relative;
+  cursor: pointer;
+}
+
+.header__modeToggle::before {
+  content: "";
+  width: 1.3rem;
+  height: 1.3rem;
+  border-radius: 18px;
+  background-color: white;
+  position: absolute;
+  transform: translateY(-50%);
+  top: 50%;
+  transition: left ease-in 100ms;
+
+  display: flex;
+  align-items: center;
+}
+
+.header__modeToggle.moon::before {
+  left: 2.3rem;
+}
+
+.header__modeToggle.sun::before {
+  left: 0.4rem;
+}
+
+.header__modeToggle::after {
+  position: absolute;
+  top: calc(50% - 0.05rem);
+  transform: translateY(-50%);
+
+  display: flex;
+  align-items: center;
+}
+
+.header__modeToggle.moon::after {
+  content: "🌝";
+  left: 0.4rem;
+}
+
+.header__modeToggle.sun::after {
+  content: "🌞";
+  left: 2.3rem;
 }
 
 .header__btn-wrapper {
@@ -193,10 +243,36 @@ body {
   background: var(--button-bg-color);
 }
 
+.filters__viewOptions {
+  display: flex;
+  gap: 1rem;
+
+  margin-top: 3rem;
+}
+
+.filters__viewOptions > li:hover {
+  cursor: pointer;
+  transform: translateY(-1px);
+}
+
 .velog {
   display: grid;
   grid-template-columns: repeat(var(--grid-columns-desktop), 1fr);
-  grid-gap: 3% 1.5%;
+  gap: 3% 1.5%;
+}
+
+.velog.slider {
+  display: flex;
+  gap: 1rem;
+  overflow-x: hidden;
+}
+
+.velog.slider .velog__post {
+  transform: unset;
+
+  display: inline-block;
+  flex-basis: calc(100% / 3 - 1rem);
+  flex-shrink: 0;
 }
 
 .velog:hover {

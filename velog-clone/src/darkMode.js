@@ -1,13 +1,30 @@
-document.querySelector('.header__modeToggle').addEventListener('click', (e) => {
-  const target = e.currentTarget;
-  if (target.classList.contains('moon')) {
-    target.classList.remove('moon');
-    target.classList.add('sun');
-    document.documentElement.removeAttribute('data-theme', 'dark');
+const DATA_THEME = 'data-theme';
+const DARK = 'dark';
+const modeToggler = document.querySelector('.header__modeToggle');
 
-  } else {
-    target.classList.add('moon');
-    target.classList.remove('sun');
-    document.documentElement.setAttribute('data-theme', 'dark');
-  }
+let ls;
+
+const toggleToDark = () => {
+  modeToggler.classList.add('moon');
+  modeToggler.classList.remove('sun');
+  document.documentElement.setAttribute(DATA_THEME, DARK);
+  ls.setItem(DATA_THEME, DARK);
+} 
+
+const toggleToLight = () => {
+  modeToggler.classList.remove('moon');
+  modeToggler.classList.add('sun');
+  document.documentElement.removeAttribute(DATA_THEME, DARK);
+  ls.removeItem(DATA_THEME);
+}
+
+window.onload = () => {
+  ls = window.localStorage;
+  const currentTheme = ls.getItem(DATA_THEME);
+  if (currentTheme) toggleToDark();
+}
+
+modeToggler.addEventListener('click', (e) => {
+  const target = e.currentTarget;
+  target.classList.contains('moon') ? toggleToLight() : toggleToDark();
 })

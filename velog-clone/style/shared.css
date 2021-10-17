@@ -5,11 +5,28 @@
   --button-bg-color: rgb(52, 58, 64);
   --tag-bg-color: rgb(241, 243, 245);
   --dropdown-selected-color: rgb(18, 184, 134);
+  --post-bg-color: white;
+  --basic-font-color: black;
+  --secondary-font-color: lightgray;
+  --logo-color: black;
+  --icon-color: black;
+
   --grid-columns-desktop: 5;
   --grid-columns-s_desktop: 4;
   --grid-columns-laptop: 3;
   --grid-columns-tablet: 2;
   --grid-columns-mobile: 1;
+}
+
+[data-theme="dark"] {
+  --main-bg-color: black;
+  --secondary-text: rgb(209, 209, 209);
+  --dropdown-selected-color: rgb(18, 184, 134);
+  --post-bg-color: rgba(52, 58, 64, 1);
+  --basic-font-color: white;
+  --secondary-font-color: rgb(161, 161, 161);
+  --logo-color: white;
+  --icon-color: white;
 }
 
 * {
@@ -41,4 +58,12 @@ h2,
 h3 {
   padding: 0;
   margin: 0;
+}
+
+svg.dark-icon {
+  stroke: var(--icon-color);
+}
+
+svg.dark-fill-icon {
+  fill: var(--icon-color);
 }

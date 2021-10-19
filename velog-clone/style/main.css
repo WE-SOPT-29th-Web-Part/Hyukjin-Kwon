@@ -12,6 +12,8 @@ body {
   color: var(--basic-font-color);
 }
 
+/* Logo */
+
 .logo {
   cursor: pointer;
   display: flex;
@@ -21,6 +23,8 @@ body {
 .logo > svg > path {
   fill: var(--logo-color);
 }
+
+/* Header */
 
 .header {
   display: flex;
@@ -123,6 +127,8 @@ body {
   height: 1.3rem;
 }
 
+/* Filter */
+
 .filters__lists {
   display: flex;
   gap: 3rem;
@@ -139,6 +145,8 @@ body {
   cursor: pointer;
 }
 
+/* Filter-Dropdown-wrapper */
+
 .filters__dd-wrapper {
   position: relative;
   min-width: fit-content;
@@ -148,6 +156,8 @@ body {
   width: 1.5rem;
   height: 1.5rem;
 }
+
+/* Filter-Dropdown-text */
 
 .filters__dd-current:hover {
   opacity: 0.6;
@@ -173,6 +183,8 @@ body {
   width: 1.5rem;
   height: 1.5rem;
 }
+
+/* Filter-Dropdown (modal) */
 
 .filters__dropdown.open {
   display: block;
@@ -229,6 +241,8 @@ body {
   width: 1rem;
 }
 
+/* 트렌딩, 최신 */
+
 .trend,
 .recent {
   position: relative;
@@ -279,11 +293,15 @@ body {
   background: var(--logo-color);
 }
 
+/* Velog PostList */
+
 .velog {
   display: grid;
   grid-template-columns: repeat(var(--grid-columns-desktop), 1fr);
   gap: 3% 1.5%;
 }
+
+/* Velog - Slider Mode */
 
 .velog.slider {
   display: flex;
@@ -360,6 +378,8 @@ body {
   border-radius: 4px;
 }
 
+/* Velog - Grid Mode */
+
 .velog__post {
   display: flex;
   flex-direction: column;
@@ -381,10 +401,14 @@ body {
   cursor: pointer;
 }
 
+/* Post inside Modal */
+
 .modal__content .velog__post,
 .modal__content .velog__post:hover {
   transform: unset !important;
 }
+
+/* Post - Img */
 
 .velog__post-thumbnail {
   width: 100%;
@@ -413,9 +437,13 @@ body {
   padding: 1rem;
 }
 
+/* Post Title */
+
 .velog__post-content > h3 {
   font-size: 0.9rem;
 }
+
+/* Post Description */
 
 .velog__post-content > p {
   flex: 1;
@@ -423,6 +451,8 @@ body {
 
   font-size: 0.8rem;
 }
+
+/* Post 시간, 댓글 wrapper */
 
 .velog__post-content > div {
   font-size: 0.7rem;
@@ -432,6 +462,8 @@ body {
 .velog__post-content > div > span:first-child::after {
   content: " ・ ";
 }
+
+/* Post Footer */
 
 .velog__post-info {
   display: flex;
@@ -471,6 +503,8 @@ body {
   font-weight: initial;
   color: var(--secondary-font-color);
 }
+
+/* Modal */
 
 body.modal-show {
   overflow-y: hidden;
@@ -517,6 +551,8 @@ body.modal-show {
 
   text-align: center;
 }
+
+/* Media Query */
 
 @media screen and (max-width: 1800px) {
   html,

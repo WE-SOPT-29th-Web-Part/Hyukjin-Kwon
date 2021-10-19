@@ -1,9 +1,11 @@
 :root {
-  --main-bg-color: rgba(248, 249, 250, 255);
   --dark-gray: rgba(88, 82, 78, 0.5);
-  --secondary-text: rgb(112, 112, 112);
   --button-bg-color: rgb(52, 58, 64);
   --tag-bg-color: rgb(241, 243, 245);
+
+  /* Light mode */
+  --main-bg-color: rgba(248, 249, 250, 255);
+  --secondary-text: rgb(112, 112, 112);
   --dropdown-selected-color: rgb(18, 184, 134);
   --post-bg-color: white;
   --basic-font-color: black;
@@ -11,6 +13,7 @@
   --logo-color: black;
   --icon-color: black;
 
+  /* Responsive-Grid-layout */
   --grid-columns-desktop: 5;
   --grid-columns-s_desktop: 4;
   --grid-columns-laptop: 3;
@@ -18,6 +21,7 @@
   --grid-columns-mobile: 1;
 }
 
+/* Dark Mode */
 [data-theme="dark"] {
   --main-bg-color: black;
   --secondary-text: rgb(209, 209, 209);

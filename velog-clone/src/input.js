@@ -1,7 +1,7 @@
 const container = document.querySelector('.container');
 const input = document.querySelector('.container__input');
 
-const tagList = new Set();
+const tagList = new Set(); // 중복 체크를 위해 Set 사용.
 
 const createTag = (value) => {
   const newTag = document.createElement('span');

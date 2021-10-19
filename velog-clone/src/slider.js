@@ -3,30 +3,34 @@ const gridOption = document.querySelector('.filters__grid');
 const sliderOption = document.querySelector('.filters__slider');
 const postContainer = document.querySelector('.velog');
 
-let slidePagination = null;
-let leftSlideBtn = null;
-let rightSlideBtn = null;
+const leftSlideBtn = document.querySelector('.slider__left');
+const rightSlideBtn = document.querySelector('.slider__right');
+const slidePagination = document.querySelector('.slider__index');
+
 let slidePostList = null;
 let currentIndex = 0; 
 let maxPostCount = 3;
 let initialPostList = null;
 
 const movePost = (direction) => {
-  if (slidePostList.length - maxPostCount <= currentIndex && direction > 0) return false;
-  if (!currentIndex && direction < 0) return false;
+  if (!currentIndex && direction < 0) return false; // 첫번째 포스트에서 왼쪽 시도?
+  if (slidePostList.length - maxPostCount <= currentIndex && direction > 0) return false; // 마지막 포스트에서 오른쪽 시도?
 
   slidePagination.childNodes[currentIndex].classList.remove('current');
 
   currentIndex += direction;
+
   slidePostList.forEach((post) => {
     post.style.transform = `translateX(calc(-${100 * currentIndex}% - ${currentIndex}rem))`;
-  });
+  }); // translateX(- (인덱스*100 + 마진) )
+
   slidePagination.childNodes[currentIndex].classList.add('current');
 }
 
 const moveLeft = () => movePost(-1);
 const moveRight = () => movePost(1);
 
+// CSS미디어쿼리 분기점 기반으로 슬라이더에 나타내는 최대 포스트 개수 표현
 const applyResponsivePostCount = () => {
   const width = window.innerWidth;
   if (width <= 700) maxPostCount = 1;
@@ -36,6 +40,7 @@ const applyResponsivePostCount = () => {
   else maxPostCount = 5;
 }
 
+// 슬라이더 하단에 현재 인덱스 나타나도록 페이지네이션
 const createPagination = (pageNum) => {
   if (slidePagination.childNodes.length) {
     slidePagination.childNodes[0].classList.add('current');
@@ -49,11 +54,12 @@ const createPagination = (pageNum) => {
   }
 }
 
+/*
+  map / cloneNode : transform 인라인 속성 오염 방지를 위해 초기 포스트리스트 백업
+  left, right 버튼에 슬라이더 이벤트 부착
+*/
 const initializeSlide = () => {
-  leftSlideBtn = document.querySelector('.slider__left');
-  rightSlideBtn = document.querySelector('.slider__right');
   slidePostList = [...document.querySelectorAll('.velog.slider .velog__post')];
-  slidePagination = document.querySelector('.slider__index');
   initialPostList = slidePostList.map((slide) => slide.cloneNode(true));
   if (!leftSlideBtn || !rightSlideBtn) return;
 
@@ -64,6 +70,7 @@ const initializeSlide = () => {
 }
 
 const cleanUpSlide = () => {
+  // 각 포스트를 원본으로 교체.
   slidePostList.forEach((post, idx) => post.replaceWith(initialPostList[idx]));
   slidePagination.childNodes.forEach((child) => child.classList.remove('current'));
   currentIndex = 0;

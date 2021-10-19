@@ -28,6 +28,7 @@ postList.addEventListener('click', (e) => {
 
   const clonedTarget = target.cloneNode(true);
 
+  // 모달 내부에 자식이 있다면 현재 클릭한 요소로 replace :: [모달 여러번 클릭 시 요소가 여러개 되는 것 방지]
   if (modalContent.firstElementChild) modalContent.replaceChild(clonedTarget, modalContent.firstElementChild);
   else modalContent.appendChild(clonedTarget);
   

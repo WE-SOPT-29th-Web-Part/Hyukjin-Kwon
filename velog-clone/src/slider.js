@@ -54,6 +54,24 @@ const createPagination = (pageNum) => {
   }
 }
 
+const resizePagination = () => {
+  // 화면이 줄었을 때
+  while(maxPostCount + slidePagination.childNodes.length < slidePostList.length + 1) {
+    const li = document.createElement('li');
+    slidePagination.appendChild(li);
+  }
+
+  // 화면이 넓어졌을 때
+  let removeIdx = slidePagination.childNodes.length - 1;
+  while(maxPostCount + slidePagination.childNodes.length > slidePostList.length + 1) {
+    if (currentIndex === removeIdx) {
+      slidePagination.childNodes[currentIndex].classList.remove('current');
+      slidePagination.childNodes[--currentIndex].classList.add('current');
+    }
+    slidePagination.childNodes[removeIdx--].remove();
+  }
+}
+
 /*
   map / cloneNode : transform 인라인 속성 오염 방지를 위해 초기 포스트리스트 백업
   left, right 버튼에 슬라이더 이벤트 부착
@@ -79,7 +97,14 @@ const cleanUpSlide = () => {
   rightSlideBtn.removeEventListener('click', moveRight);
 }
 
-window.addEventListener('resize', applyResponsivePostCount);
+const handleResize = () => {
+  const prevPostCount = maxPostCount;
+  applyResponsivePostCount();
+  if (slidePostList && prevPostCount !== maxPostCount) resizePagination();
+  // 포스트 개수의 변화가 생겼을 때
+}
+
+window.addEventListener('resize', handleResize);
 
 viewOptions.addEventListener('click', (e) => {
   const target = e.target.closest('li');

@@ -1,0 +1,59 @@
+.profile {
+  background-color: rgb(80, 80, 80);
+
+  position: relative;
+
+  width: 30%;
+
+  border-radius: 18px;
+  box-shadow: 5px 5px 15px 5px rgb(126, 126, 126);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+
+  padding: 1rem 0;
+
+  &__username {
+    & h2 {
+      color: white;
+    }
+
+    & h3 {
+      font-size: 0.9rem;
+      color: rgb(148, 148, 148);
+    }
+  }
+
+  &__followInfo {
+    list-style: none;
+    padding: 0;
+  }
+
+  &__thumbnail {
+    display: flex;
+    justify-content: center;
+    & > img {
+      border-radius: 50%;
+      overflow: hidden;
+      max-width: 50%;
+    }
+  }
+
+  &__closeBtn {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+
+    background-color: transparent;
+    color: white;
+    border: 0;
+    font-size: 1.2rem;
+
+    &:hover {
+      cursor: pointer;
+      transform: scale(1.1);
+    }
+  }
+}

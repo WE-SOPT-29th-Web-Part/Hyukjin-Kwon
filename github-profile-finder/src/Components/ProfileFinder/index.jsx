@@ -8,7 +8,7 @@ import './index.scss';
 function ProfileFinder() {
   return (
     <main className="profileFinder">
-      <h1>니 깃허브 쩔더라</h1>
+      <h1>니 깃허브 쩔더라?</h1>
       <ProfileHandler />
       <img src={yourGithub} alt="telescope-man" />
     </main>

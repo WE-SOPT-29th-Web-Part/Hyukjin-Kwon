@@ -16,6 +16,7 @@
   padding: 1rem 0;
 
   &__username {
+    text-align: center;
     & h2 {
       color: white;
     }
@@ -27,8 +28,22 @@
   }
 
   &__followInfo {
+    display: flex;
+    gap: 1rem;
     list-style: none;
     padding: 0;
+
+    & > li {
+      font-family: "yj";
+      color: white;
+
+      &:nth-child(1):before {
+        content: "😎";
+      }
+      &:nth-child(2):before {
+        content: "🤩";
+      }
+    }
   }
 
   &__thumbnail {
@@ -55,5 +70,40 @@
       cursor: pointer;
       transform: scale(1.1);
     }
+  }
+
+  &__intro {
+    padding: 0 1rem;
+    text-align: center;
+    color: white;
+    font-family: "yj";
+    font-size: 0.9rem;
+  }
+
+  &__footer {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+
+    & > * {
+      color: black;
+      background-color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 18px;
+      border: none;
+      text-decoration: none;
+      font-family: "yj";
+
+      font-size: 0.8rem;
+
+      &:hover {
+        cursor: pointer;
+        transform: scale(1.1);
+      }
+    }
+  }
+
+  & > hr {
+    width: 100%;
   }
 }

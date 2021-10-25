@@ -6,7 +6,7 @@ import './index.scss';
 function Profile(props) {
   const { toggle, userInfo } = props;
   const {
-    thumbnail, nickname, userId, following, followers,
+    thumbnail, nickname, userId, following, followers, githubUrl, introduce,
   } = userInfo;
 
   return (
@@ -19,11 +19,21 @@ function Profile(props) {
         <h3>{userId}</h3>
       </div>
 
+      <div className="profile__intro">
+        {introduce}
+      </div>
+
+      <hr />
+
       <ul className="profile__followInfo">
-        <li>{`팔로잉: ${following}`}</li>
-        <li>{`팔로워: ${followers}`}</li>
+        <li>{`팔로우가 무려 ${followers}명`}</li>
+        <li>{`팔로워가 벌써 ${following}명`}</li>
       </ul>
 
+      <div className="profile__footer">
+        <a href={githubUrl} className="profile__visit">구경하기</a>
+        <button type="button" onClick={toggle} className="profile__dislike">별로에요</button>
+      </div>
       <button type="button" onClick={toggle} className="profile__closeBtn">X</button>
     </article>
   );
@@ -37,6 +47,8 @@ Profile.propTypes = {
     userId: PropTypes.string,
     following: PropTypes.number,
     followers: PropTypes.number,
+    githubUrl: PropTypes.string,
+    introduce: PropTypes.string,
   }).isRequired,
 };
 

@@ -22,6 +22,7 @@ function ProfileHandler() {
           html_url: githubUrl,
           login: userId,
           name: nickname,
+          bio: introduce,
           followers,
           following,
         } = result.data;
@@ -31,6 +32,7 @@ function ProfileHandler() {
           githubUrl,
           userId,
           nickname,
+          introduce,
           followers,
           following,
         };
@@ -53,6 +55,7 @@ function ProfileHandler() {
     setIsError(false);
     setIsResultShown(false);
     setIsLoading(false);
+    setUsername('');
   };
 
   return (

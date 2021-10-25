@@ -3,17 +3,24 @@
   display: flex;
   justify-content: center;
 
-  & > input {
-    width: 20%;
+  &__inputWrapper {
+    position: relative;
+    width: 100%;
+    display: flex;
+    justify-content: center;
 
-    border: 3px solid darkgray;
-    border-radius: 10px;
-    padding: 1rem;
-    outline: none;
+    & > input {
+      font-size: 0.8rem;
+      width: 20%;
 
-    &:focus {
-      transform: scale(1.05);
-      border: 3px solid rgb(150, 167, 190);
+      border: 3px solid darkgray;
+      border-radius: 10px;
+      padding: 1rem;
+      outline: none;
+
+      &:focus {
+        border: 3px solid rgb(150, 167, 190);
+      }
     }
   }
 }

@@ -1,0 +1,18 @@
+.calcResult {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  margin: 0 1rem;
+
+  &__result {
+    flex: 2;
+  }
+
+  & > .wrapper {
+    flex: 5;
+
+    & > input {
+      width: 2rem;
+    }
+  }
+}

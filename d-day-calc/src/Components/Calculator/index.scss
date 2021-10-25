@@ -1,0 +1,28 @@
+.calc {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+
+  min-width: 50%;
+  min-height: 450px;
+
+  border-radius: 18px;
+  box-shadow: 5px 5px 15px 5px #aaa;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  overflow: hidden;
+  padding-bottom: 1rem;
+
+  &__header {
+    background-color: mediumaquamarine;
+    border: 1px solid mediumaquamarine;
+    text-align: center;
+    padding: 1rem;
+
+    font-weight: bold;
+  }
+}

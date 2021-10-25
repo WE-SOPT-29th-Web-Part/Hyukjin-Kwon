@@ -1,0 +1,24 @@
+.calcInput {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+
+  &__inputWrapper > input {
+    width: 2rem;
+  }
+
+  &__inputWrapper > span {
+    margin-right: 0.5rem;
+  }
+
+  &__todayBtn {
+    color: darkgray;
+    background-color: transparent;
+    border: 0;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}

@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react';
 import axios from 'axios';
 
 import Profile from 'Components/ProfileFinder/Profile';
-import NotFound from 'Components/ProfileFinder/NotFound';
+import NotFound from 'Components/Common/NotFound';
 import Loader from 'Components/Common/Loader';
 
 import { GITHUB_API, USER_URI } from 'Constants/api-uri';

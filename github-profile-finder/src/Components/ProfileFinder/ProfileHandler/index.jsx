@@ -19,13 +19,18 @@ function ProfileHandler({ containerRef }) {
   const [isHistoryShown, setIsHistoryShown] = useState(false);
   const [username, setUsername] = useState('');
 
+  const isRedundant = (list, target) => new Set(list).has(target);
+
   const addHistory = (queryUsername) => {
     const ls = window.localStorage;
     try {
       const historyList = ls.getItem('profile-history');
       if (historyList) {
-        const addedHistory = [...JSON.parse(historyList), queryUsername];
-        ls.setItem('profile-history', JSON.stringify(addedHistory));
+        const parsedHistoryList = JSON.parse(historyList);
+        if (!isRedundant(parsedHistoryList, queryUsername)) {
+          const addedHistory = [...parsedHistoryList, queryUsername].slice(-3).reverse();
+          ls.setItem('profile-history', JSON.stringify(addedHistory));
+        }
       } else {
         ls.setItem('profile-history', JSON.stringify([queryUsername]));
       }

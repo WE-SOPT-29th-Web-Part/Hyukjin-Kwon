@@ -2,6 +2,7 @@ import React, { useState, useRef } from 'react';
 import axios from 'axios';
 
 import Profile from 'Components/ProfileFinder/Profile';
+import NotFound from 'Components/ProfileFinder/NotFound';
 
 import { GITHUB_API, USER_URI } from 'Constants/api-uri';
 
@@ -60,7 +61,7 @@ function ProfileHandler() {
 
   return (
     <div className="profileHandler">
-      {isResultShown && isError && <div>Error!</div>}
+      {isResultShown && isError && <NotFound />}
       {isResultShown && !isError && <Profile toggle={closeResult} userInfo={userInfo.current} />}
       {!isResultShown && isLoading && (
         <div>Loading...</div>

@@ -1,0 +1,43 @@
+.profileHistory {
+  position: absolute;
+  top: calc(2.8rem + 9px);
+
+  margin: 0;
+  padding: 1rem;
+  border: 3px solid lightsteelblue;
+  border-radius: 10px;
+
+  width: 20%;
+
+  list-style: none;
+  background-color: white;
+
+  & > li > button {
+    all: unset;
+
+    & > span {
+      &:hover {
+        cursor: pointer;
+      }
+    }
+
+    &:nth-child(2) {
+      &:hover {
+        transform: scale(1.1);
+      }
+    }
+  }
+
+  & > li:not(.profileHistory__elem--noResult) {
+    // width: 100%;
+    padding: 0.3rem;
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.7rem;
+    margin-bottom: 0.3rem;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}

@@ -1,21 +1,21 @@
 {
   "files": {
-    "main.css": "/static/css/main.d209a262.chunk.css",
-    "main.js": "/static/js/main.93dcaccd.chunk.js",
-    "main.js.map": "/static/js/main.93dcaccd.chunk.js.map",
-    "runtime-main.js": "/static/js/runtime-main.b38b8460.js",
-    "runtime-main.js.map": "/static/js/runtime-main.b38b8460.js.map",
-    "static/js/2.385cc8b0.chunk.js": "/static/js/2.385cc8b0.chunk.js",
-    "static/js/2.385cc8b0.chunk.js.map": "/static/js/2.385cc8b0.chunk.js.map",
-    "index.html": "/index.html",
-    "static/css/main.d209a262.chunk.css.map": "/static/css/main.d209a262.chunk.css.map",
-    "static/js/2.385cc8b0.chunk.js.LICENSE.txt": "/static/js/2.385cc8b0.chunk.js.LICENSE.txt",
-    "static/media/gitCat.40aa8fa6.png": "/static/media/gitCat.40aa8fa6.png",
-    "static/media/telescope-bg-bottom.7e2293e7.png": "/static/media/telescope-bg-bottom.7e2293e7.png",
-    "static/media/telescope-bg-top.553e5cc2.png": "/static/media/telescope-bg-top.553e5cc2.png"
+    "main.css": "./static/css/main.d209a262.chunk.css",
+    "main.js": "./static/js/main.93dcaccd.chunk.js",
+    "main.js.map": "./static/js/main.93dcaccd.chunk.js.map",
+    "runtime-main.js": "./static/js/runtime-main.8bd577a1.js",
+    "runtime-main.js.map": "./static/js/runtime-main.8bd577a1.js.map",
+    "static/js/2.385cc8b0.chunk.js": "./static/js/2.385cc8b0.chunk.js",
+    "static/js/2.385cc8b0.chunk.js.map": "./static/js/2.385cc8b0.chunk.js.map",
+    "index.html": "./index.html",
+    "static/css/main.d209a262.chunk.css.map": "./static/css/main.d209a262.chunk.css.map",
+    "static/js/2.385cc8b0.chunk.js.LICENSE.txt": "./static/js/2.385cc8b0.chunk.js.LICENSE.txt",
+    "static/media/gitCat.40aa8fa6.png": "./static/media/gitCat.40aa8fa6.png",
+    "static/media/telescope-bg-bottom.7e2293e7.png": "./static/media/telescope-bg-bottom.7e2293e7.png",
+    "static/media/telescope-bg-top.553e5cc2.png": "./static/media/telescope-bg-top.553e5cc2.png"
   },
   "entrypoints": [
-    "static/js/runtime-main.b38b8460.js",
+    "static/js/runtime-main.8bd577a1.js",
     "static/js/2.385cc8b0.chunk.js",
     "static/css/main.d209a262.chunk.css",
     "static/js/main.93dcaccd.chunk.js"

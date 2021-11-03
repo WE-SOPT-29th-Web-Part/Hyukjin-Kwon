@@ -1,34 +1,57 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 import trashCan from '../assets/icon/trash-can.svg';
 
 function Todo({ isLeft }) {
+  const [todoList, setTodoList] = useState([]);
+  const [todoValue, setTodoValue] = useState('');
+  const handleTodoValue = (e) => setTodoValue(e.target.value);
+
+  const showTodoList = () => todoList.map((todoElem) => (
+    <TodoItem className="todos__item">
+      <div className="todos__btn-wrapper">
+        <span>{todoElem}</span>
+        <button
+          type="button"
+          className="todos__remove-btn"
+          onClick={() => {
+            setTodoList(todoList.filter((elem) => elem !== todoElem));
+          }}
+        >
+          <img src={trashCan} alt="remove-btn" />
+        </button>
+      </div>
+    </TodoItem>
+  ));
+
+  const isRedundant = (list, target) => new Set(list).has(target);
+
+  const addTodoList = () => {
+    if (todoValue && typeof todoValue === 'string' && !isRedundant(todoList, todoValue)) setTodoList([...todoList, todoValue.trim()]);
+    setTodoValue('');
+  };
+
   return (
     <StyledTodo isLeft={isLeft}>
-      <h2>오늘 할 일</h2>
+      <h2>
+        {isLeft ? '오늘 할 일' : '내일 할 일'}
+      </h2>
       <TodoItems className="todos__items">
-        <TodoItem className="todos__item">
-          <div className="todos__btn-wrapper">
-            <span>HTML 배우기</span>
-            <button type="button" className="todos__remove-btn">
-              <img src={trashCan} alt="remove-btn" />
-            </button>
-          </div>
-        </TodoItem>
-        <TodoItem className="todos__item">
-          <div className="todos__btn-wrapper">
-            <span>CSS 배우기</span>
-            <button type="button" className="todos__remove-btn">
-              <img src={trashCan} alt="remove-btn" />
-            </button>
-          </div>
-        </TodoItem>
+        {showTodoList()}
       </TodoItems>
       <AddTodo className="todos__add-item">
-        <input type="text" placeholder="TODO를 추가해주세요." />
-        <button type="button" className="todos__add-btn">+</button>
+        <input
+          type="text"
+          value={todoValue}
+          onChange={handleTodoValue}
+          onKeyPress={(e) => {
+            if (e.key === 'Enter') addTodoList();
+          }}
+          placeholder="TODO를 추가해주세요."
+        />
+        <button type="button" className="todos__add-btn" onClick={addTodoList}>+</button>
       </AddTodo>
     </StyledTodo>
   );

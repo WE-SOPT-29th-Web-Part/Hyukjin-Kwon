@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { createGlobalStyle } from 'styled-components';
 
@@ -8,12 +8,13 @@ import Footer from './components/Footer';
 import TodoContainer from './components/TodoContainer';
 
 function App() {
+  const [expandSection, setExpandSection] = useState('');
   return (
     <>
       <GlobalStyle />
       <Header />
-      <NavBar />
-      <TodoContainer />
+      <NavBar setExpandSection={setExpandSection} />
+      <TodoContainer hiddenSection={expandSection} />
       <Footer />
     </>
 

@@ -4,13 +4,13 @@ import styled from 'styled-components';
 
 import trashCan from '../assets/icon/trash-can.svg';
 
-function Todo({ isLeft }) {
+function Todo({ isLeft, hiddenSection }) {
   const [todoList, setTodoList] = useState([]);
   const [todoValue, setTodoValue] = useState('');
   const handleTodoValue = (e) => setTodoValue(e.target.value);
 
   const showTodoList = () => todoList.map((todoElem) => (
-    <TodoItem className="todos__item">
+    <TodoItem className="todos__item" key={`todo-${todoElem}`}>
       <div className="todos__btn-wrapper">
         <span>{todoElem}</span>
         <button
@@ -29,12 +29,12 @@ function Todo({ isLeft }) {
   const isRedundant = (list, target) => new Set(list).has(target);
 
   const addTodoList = () => {
-    if (todoValue && typeof todoValue === 'string' && !isRedundant(todoList, todoValue)) setTodoList([...todoList, todoValue.trim()]);
+    if (todoValue && typeof todoValue === 'string' && !isRedundant(todoList, todoValue.trim())) setTodoList([...todoList, todoValue.trim()]);
     setTodoValue('');
   };
 
   return (
-    <StyledTodo isLeft={isLeft}>
+    <StyledTodo isLeft={isLeft} hide={!!hiddenSection}>
       <h2>
         {isLeft ? '오늘 할 일' : '내일 할 일'}
       </h2>
@@ -59,10 +59,12 @@ function Todo({ isLeft }) {
 
 Todo.propTypes = {
   isLeft: PropTypes.bool,
+  hiddenSection: PropTypes.oneOf(['left', 'right', '']),
 };
 
 Todo.defaultProps = {
   isLeft: false,
+  hiddenSection: '',
 };
 
 const StyledTodo = styled.section`
@@ -75,11 +77,11 @@ const StyledTodo = styled.section`
 
   ${(props) => (props.isLeft ? 'border-right: 1px solid lightgray;' : '')} 
 
-  &.extended {
+  ${(props) => (props.hide ? `
     transition: all 300ms ease-in;
     width: 0;
     visibility: hidden;
-  }
+  ` : '')}
 `;
 
 const TodoItems = styled.ul`

@@ -1,12 +1,13 @@
-const viewOptions = document.querySelector(".filters__viewOptions");
-const gridOption = document.querySelector(".filters__grid");
-const sliderOption = document.querySelector(".filters__slider");
-const postContainer = document.querySelector(".velog");
+import { getClassList, safeQuerySelector, isHTMLElement } from "./dom-util";
 
-const leftSlideBtn = document.querySelector(".slider__left");
-const rightSlideBtn = document.querySelector(".slider__right");
-const slidePagination =
-  document.querySelector<HTMLUListElement>(".slider__index");
+const viewOptions = safeQuerySelector(".filters__viewOptions");
+const gridOption = safeQuerySelector(".filters__grid");
+const sliderOption = safeQuerySelector(".filters__slider");
+const postContainer = safeQuerySelector(".velog");
+
+const leftSlideBtn = safeQuerySelector(".slider__left");
+const rightSlideBtn = safeQuerySelector(".slider__right");
+const slidePagination = safeQuerySelector(".slider__index");
 
 type PostList = HTMLElement[] | null;
 type PostCloneList = Node[] | null;
@@ -22,9 +23,7 @@ const movePost = (direction: -1 | 1) => {
   if (slidePostList.length - maxPostCount <= currentIndex && direction > 0)
     return false; // 마지막 포스트에서 오른쪽 시도?
 
-  (slidePagination.childNodes[currentIndex] as HTMLLIElement).classList.remove(
-    "current"
-  );
+  getClassList(slidePagination.childNodes[currentIndex])?.remove("current");
 
   currentIndex += direction;
 
@@ -34,9 +33,7 @@ const movePost = (direction: -1 | 1) => {
     }% - ${currentIndex}rem))`;
   }); // translateX(- (인덱스*100 + 마진) )
 
-  (slidePagination.childNodes[currentIndex] as HTMLLIElement).classList.add(
-    "current"
-  );
+  getClassList(slidePagination.childNodes[currentIndex])?.add("current");
 };
 
 const moveLeft = () => movePost(-1);
@@ -55,7 +52,7 @@ const applyResponsivePostCount = () => {
 // 슬라이더 하단에 현재 인덱스 나타나도록 페이지네이션
 const createPagination = (pageNum: number) => {
   if (slidePagination && slidePagination.childNodes.length) {
-    (slidePagination.childNodes[0] as HTMLLIElement).classList.add("current");
+    getClassList(slidePagination.childNodes[0])?.add("current");
     return;
   }
 
@@ -85,12 +82,8 @@ const resizePagination = () => {
     slidePostList.length + 1
   ) {
     if (currentIndex === removeIdx) {
-      (
-        slidePagination.childNodes[currentIndex] as HTMLLIElement
-      ).classList.remove("current");
-      (
-        slidePagination.childNodes[--currentIndex] as HTMLLIElement
-      ).classList.add("current");
+      getClassList(slidePagination.childNodes[currentIndex])?.remove("current");
+      getClassList(slidePagination.childNodes[--currentIndex])?.add("current");
     }
     slidePagination.childNodes[removeIdx--].remove();
   }
@@ -121,7 +114,7 @@ const cleanUpSlide = () => {
     if (initialPostList) post.replaceWith(initialPostList[idx]);
   });
   slidePagination?.childNodes.forEach((child) =>
-    (child as HTMLLIElement).classList.remove("current")
+    getClassList(child)?.remove("current")
   );
   currentIndex = 0;
 
@@ -139,7 +132,8 @@ const handleResize = () => {
 window.addEventListener("resize", handleResize);
 
 viewOptions?.addEventListener("click", (e) => {
-  const target = (e.target as HTMLElement).closest("li");
+  if (!isHTMLElement(e.target)) return false;
+  const target = e.target.closest("li");
   if (target) {
     if (target.className === "filters__grid") {
       postContainer?.classList.remove("slider");

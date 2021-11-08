@@ -1,28 +1,22 @@
-"use strict";
+import { isHTMLElement, safeQuerySelector } from "./dom-util";
 
 let isAnyDropdownOpen = false;
 
 const dropdowns = document.querySelectorAll(".filters__dd-wrapper");
-const optionsDropdown = document.querySelector(
+const optionsDropdown = safeQuerySelector(
   ".options > .filters__dd-wrapper .filters__dropdown"
 );
-const menuDropdown = document.querySelector(
+const menuDropdown = safeQuerySelector(
   ".menu > .filters__dd-wrapper .filters__dropdown"
 );
 
 const dropdownTextGroup = document.querySelectorAll("ul.filters__dropdown");
-const currentDropDownText = document.querySelector<HTMLSpanElement>(
-  ".filters__dd-current > span"
-);
-
-interface IMyHTMLCollection<T> extends HTMLCollection {
-  forEach(cb: (child: T) => void): void;
-}
+const currentDropDownText = safeQuerySelector(".filters__dd-current > span");
 
 // 드랍다운 외부 구역 클릭 시 드랍다운 close
 document.addEventListener("click", (e) => {
   const target = e.target;
-  if (!(target instanceof HTMLElement)) return false;
+  if (!isHTMLElement(target)) return false;
 
   const parent = target.closest("li");
   const isDropdownClicked =
@@ -53,7 +47,7 @@ dropdowns.forEach((dropdown) => {
 dropdownTextGroup.forEach((dropdownText, ddIndex) => {
   dropdownText.addEventListener("click", (e) => {
     const target = e.target;
-    if (!(target instanceof HTMLElement)) return false;
+    if (!isHTMLElement(target)) return false;
 
     const parent = target.closest("ul");
     if (parent && parent.classList.contains("filters__dropdown")) {

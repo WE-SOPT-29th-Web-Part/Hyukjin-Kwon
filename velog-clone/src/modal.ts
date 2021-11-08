@@ -1,5 +1,7 @@
 "use strict";
 
+import { isHTMLElement } from "./dom-util";
+
 const body = document.querySelector("body");
 const postList = document.querySelector("main.velog");
 
@@ -21,13 +23,12 @@ const showModal = () => {
 };
 
 modal?.addEventListener("click", (e) => {
-  if (!(e.target instanceof HTMLElement)) return false;
-
+  if (!isHTMLElement(e.target)) return false;
   if (isClickedByOutside(e.target)) hideModal();
 });
 
 postList?.addEventListener("click", (e) => {
-  if (!(e.target instanceof HTMLElement)) return false;
+  if (!isHTMLElement(e.target)) return false;
   const target = e.target?.closest("article");
   if (!target) return false;
 

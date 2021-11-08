@@ -1,3 +1,5 @@
+import { isHTMLElement } from "./dom-util";
+
 const DATA_THEME = "data-theme";
 const DARK = "dark";
 const modeToggler = document.querySelector(".header__modeToggle");
@@ -25,6 +27,6 @@ window.onload = () => {
 
 modeToggler?.addEventListener("click", (e) => {
   const target = e.currentTarget;
-  if (!(target instanceof HTMLElement)) return false;
+  if (!isHTMLElement(target)) return false;
   target.classList.contains("moon") ? toggleToLight() : toggleToDark();
 });

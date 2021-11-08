@@ -1,28 +1,39 @@
 "use strict";
 
-const rightSection = document.querySelector(".todos__right");
-const leftSection = document.querySelector(".todos__left");
+const isHTMLElement = (someElement: Element): someElement is HTMLElement => {
+  return someElement instanceof HTMLElement;
+};
 
-const rightList = document.querySelector<HTMLUListElement>(
-  ".todos__right > .todos__items"
-);
-const rightInput = document.querySelector<HTMLInputElement>(
+const isHTMLInputElement = (
+  someElement: Element
+): someElement is HTMLInputElement => {
+  return "value" in someElement;
+};
+
+const safeQuerySelector = (selector: string) => {
+  const element = document.querySelector(selector);
+
+  if (!element) return null;
+  if (!isHTMLElement(element)) return null;
+
+  return element;
+};
+
+const rightSection = safeQuerySelector(".todos__right");
+const leftSection = safeQuerySelector(".todos__left");
+
+const rightList = safeQuerySelector(".todos__right > .todos__items");
+const rightInput = safeQuerySelector(
   ".todos__right > .todos__add-item > input"
 );
 
-const leftList = document.querySelector<HTMLUListElement>(
-  ".todos__left > .todos__items"
-);
-const leftInput = document.querySelector<HTMLInputElement>(
-  ".todos__left > .todos__add-item > input"
-);
+const leftList = safeQuerySelector(".todos__left > .todos__items");
+const leftInput = safeQuerySelector(".todos__left > .todos__add-item > input");
 
-const addBtns = document.querySelectorAll<HTMLButtonElement>(".todos__add-btn");
-const inputs = document.querySelectorAll<HTMLInputElement>(
-  ".todos__add-item > input"
-);
+const addBtns = document.querySelectorAll(".todos__add-btn");
+const inputs = document.querySelectorAll(".todos__add-item > input");
 
-const navs = document.querySelector(".navBar");
+const navs = safeQuerySelector(".navBar");
 
 interface IItem {
   newList: HTMLElement;
@@ -65,14 +76,18 @@ const createNewItem = (): IItem => {
 
 const addTodoItem = (target: HTMLElement) => {
   const { newList, newSpan } = createNewItem();
+  if (!leftInput || !rightInput) return false;
+  if (!isHTMLInputElement(leftInput) || !isHTMLInputElement(rightInput))
+    return false;
+
   if (isRightSection(target)) {
-    if (rightInput && rightInput.value.trim()) {
+    if (rightInput.value.trim()) {
       newSpan.innerText = rightInput.value;
       rightList?.appendChild(newList);
       rightInput.value = "";
     }
   } else {
-    if (leftInput && leftInput.value.trim()) {
+    if (leftInput.value.trim()) {
       newSpan.innerText = leftInput.value;
       leftList?.appendChild(newList);
       leftInput.value = "";
@@ -86,12 +101,14 @@ document.querySelectorAll(".todos__remove-btn").forEach((btn) => {
 });
 
 addBtns.forEach((addBtn) => {
+  if (!isHTMLElement(addBtn)) return false;
   addBtn.addEventListener("click", (e) => {
     addTodoItem(addBtn);
   });
 });
 
 inputs.forEach((input) => {
+  if (!isHTMLInputElement(input)) return false;
   input.addEventListener("keyup", (e) => {
     if (!input.value) return false;
     if (e.key === "Enter") {

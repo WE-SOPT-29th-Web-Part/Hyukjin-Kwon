@@ -67,21 +67,40 @@ const Container = styled.main`
 
 const TypeSelector = styled.div`
   width: 800px;
-  margin: 0 auto;
+  margin: 5% auto;
   display: flex;
   justify-content: center;
 `;
 
 const ArticleType = styled.button`
+  position: relative;
   padding: 1rem 2rem;
   background-color: transparent;
 
   font-weight: 500;
   font-size: 1.2rem;
+
+  &::after {
+    content: '';
+    height: 2px;
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    
+    width: 0;
+    background-color: rgb(18, 184, 134);
+    transition: width 300ms ease-in;
+  }
   
   ${(props) => (props.isActive ? `
     color: rgb(18, 184, 134);
-    border-bottom: 1px solid rgb(18, 184, 134);
+    
+    &::after {
+      width: 100%;
+      transition: width 300ms ease-in;
+    }
+    
   ` : '')}
 `;
 

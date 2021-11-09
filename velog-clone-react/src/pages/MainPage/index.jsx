@@ -1,9 +1,18 @@
+import styled from 'styled-components';
+
+import Navbar from 'components/Navbar';
+
 function MainPage() {
   return (
-    <div>
-      this is main Page
-    </div>
+    <Container>
+      <Navbar />
+    </Container>
   );
 }
+
+const Container = styled.main`
+  width: 1280px;
+  height: 100%;
+`;
 
 export default MainPage;

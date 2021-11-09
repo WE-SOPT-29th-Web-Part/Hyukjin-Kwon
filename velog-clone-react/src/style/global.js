@@ -6,10 +6,21 @@ const GlobalStyle = createGlobalStyle`
     height: 100%;
     padding: 0;
     margin: 0;
+    background-color: rgba(248, 249, 250, 255);
+    
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 
   * {
     box-sizing: border-box;
+  }
+
+  a {
+    text-decoration: none;
+    color: initial;
   }
 
   h1,

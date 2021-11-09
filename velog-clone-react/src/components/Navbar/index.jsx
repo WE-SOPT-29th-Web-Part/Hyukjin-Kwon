@@ -32,7 +32,6 @@ function Navbar() {
             height="1em"
             width="1em"
             xmlns="http://www.w3.org/2000/svg"
-            className="dark-fill-icon"
           >
             <path d="M7 10l5 5 5-5z" />
           </svg>

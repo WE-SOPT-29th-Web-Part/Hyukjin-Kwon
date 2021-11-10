@@ -5,11 +5,16 @@ import styled from 'styled-components';
 import Navbar from 'components/Navbar';
 import UserBoard from 'components/UserBoard';
 import Article from 'components/Article';
+import Loader from 'components/Loader';
+
+import { getArticle, getSeries } from 'core/api';
 
 const ROOT = '/';
 const SERIES = '/series';
 
 function MainPage() {
+  const [isLoading, setIsLoading] = useState(false);
+  const [currentList, setCurrentList] = useState();
   const [currentActive, setCurrentActive] = useState(ROOT);
   const location = useLocation();
   const navigator = useNavigate();
@@ -26,9 +31,21 @@ function MainPage() {
     };
   };
 
+  const showArticle = () => currentList.map((article) => <Article key={`${article.title}_${article.date}`} articleInfo={article} />);
+
   useEffect(() => {
     if (location && location.pathname !== currentActive) setCurrentActive(location.pathname);
   }, [currentActive, location]);
+
+  useEffect(() => {
+    async function fetchCurrentList() {
+      setIsLoading(true);
+      if (currentActive === ROOT) setCurrentList(await getArticle());
+      else setCurrentList(await getSeries());
+      setIsLoading(false);
+    }
+    fetchCurrentList();
+  }, [currentActive]);
 
   return (
     <Container>
@@ -49,9 +66,8 @@ function MainPage() {
         </ArticleType>
       </TypeSelector>
       <ArticleList>
-        <Article />
-        <Article />
-        <Article />
+        {isLoading && <Loader width="50px" />}
+        {!isLoading && currentList && showArticle()}
       </ArticleList>
     </Container>
 
@@ -63,7 +79,7 @@ const Container = styled.main`
   height: 100%;
 
   margin: 0 auto;
-  `;
+`;
 
 const TypeSelector = styled.div`
   width: 800px;

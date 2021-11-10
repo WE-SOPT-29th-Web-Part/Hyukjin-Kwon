@@ -7,6 +7,11 @@ const GlobalStyle = createGlobalStyle`
     padding: 0;
     margin: 0;
     background-color: rgba(248, 249, 250, 255);
+
+    -ms-overflow-style:none;
+    &::-webkit-scrollbar { 
+      display:none;
+    }
   }
 
   * {

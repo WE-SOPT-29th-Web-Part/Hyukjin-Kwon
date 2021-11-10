@@ -1,9 +1,11 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { Delimiter, Tag } from 'components/common';
+import Modal from 'components/Modal';
+import { postArticle } from 'core/api';
 import useInput from 'core/useInput';
-
 import { BsArrowLeftShort } from 'react-icons/bs';
 
 const summaryValidate = {
@@ -12,13 +14,20 @@ const summaryValidate = {
 };
 
 function WritePage() {
+  const navigator = useNavigate();
+
   const titleInput = useInput();
   const tagInput = useInput();
+  const descInput = useInput();
+
   const { validInfo, ...summary } = useInput(summaryValidate);
   const { isValid, warnText: WarnText } = validInfo;
+
   const [tagList, setTagList] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const isDuplicateTag = (needCheckTag) => new Set(tagList).has(needCheckTag);
+  const isAllInputFilled = () => titleInput.value && descInput.value;
 
   const addTag = (e) => {
     e.preventDefault();
@@ -28,8 +37,17 @@ function WritePage() {
       tagInput.initialize();
     }
   };
-
   const removeTag = (targetTag) => setTagList(tagList.filter((tag) => tag !== targetTag));
+  const publishArticle = async () => {
+    if (summary.value && isAllInputFilled()) {
+      await postArticle({
+        title: titleInput.value,
+        summary: summary.value,
+        tags: tagList,
+      });
+      navigator('/');
+    }
+  };
 
   return (
     <Container>
@@ -41,30 +59,44 @@ function WritePage() {
         ))}
         <TagInput type="text" {...tagInput} placeholder="태그를 입력하세요." />
       </TagList>
-      <Wrapper>
-        <SummaryInput {...summary} placeholder="Show me what you got (150자 이하)" />
-        {!isValid && <WarnText />}
-      </Wrapper>
+
+      <SummaryInput {...descInput} placeholder="당신의 이야기...가 제법,, 궁금해요..." />
+
       <Footer>
-        <ExitButton>
-          <>
-            <BsArrowLeftShort />
-            <span>나가기</span>
-          </>
-        </ExitButton>
+        <Link to="/">
+          <BsArrowLeftShort />
+          <span>나가기</span>
+        </Link>
         <ButtonWrapper>
-          <TemporalSaveBtn>임시저장</TemporalSaveBtn>
-          <SaveBtn>출간하기</SaveBtn>
+          <GrayButton>임시저장</GrayButton>
+          <GreenButton disabled={!isAllInputFilled()} onClick={() => setIsModalOpen(true)}>
+            출간하기
+          </GreenButton>
         </ButtonWrapper>
       </Footer>
+
+      <Modal isOpen={isModalOpen}>
+        <ModalContent>
+          <h3>포스트 미리보기</h3>
+          <ThumbnailInput type="file" />
+          <Wrapper>
+            <SummaryInput {...summary} placeholder="당신의 포스트를 짧게 소개해주세요. (150자 이하)" />
+            {!isValid && <WarnText />}
+          </Wrapper>
+          <ButtonWrapper>
+            <GrayButton onClick={() => setIsModalOpen(false)}>취소</GrayButton>
+            <GreenButton onClick={publishArticle}>출간하기</GreenButton>
+          </ButtonWrapper>
+        </ModalContent>
+      </Modal>
     </Container>
   );
 }
 
 const Container = styled.main`
   width: 50%;
-  height: 100vh;
-  padding: 2%;
+  padding: 2rem;
+  height: calc(100vh - 4rem);
   background-color: white;
 
   display: flex;
@@ -93,32 +125,54 @@ const TagInput = styled.input`
 const SummaryInput = styled.textarea`
   width: 100%;
   height: 100%;
-  position: relative;
   border: none;
   resize: none;
   outline: none;
 
   font-size: 1.3rem;
   padding-top: 2rem;
+
+  -ms-overflow-style:none;
+  &::-webkit-scrollbar { 
+    display:none;
+  }
+`;
+
+const ThumbnailInput = styled.input`
+  text-align: center;
+  width: 100%;
+  background-color: lightgray;
+  border-radius: 4px;
+  padding: 0.3rem;
 `;
 
 const Wrapper = styled.div`
   margin-top: 3%;
   position: relative;
   flex: 1;
+
+  width: 100%;
 `;
 
 const Footer = styled.footer`
   width: 50%;
-  position: absolute;
+  position: fixed;
+  z-index: 5;
   bottom: 0;
   left: 0;
-  padding:1rem 2%;
+  padding: 1rem 2%;
 
   display: flex;
   justify-content: space-between;
+  align-items: center;
+
+  background-color: white;
 
   box-shadow: 3px 3px 5px 3px lightgray;
+
+  & > a:hover {
+    transform: scale(1.3);
+  }
 `;
 
 const ButtonWrapper = styled.div`
@@ -127,7 +181,7 @@ const ButtonWrapper = styled.div`
   gap: 1rem;
 `;
 
-const ExitButton = styled.button`
+const BasicButton = styled.button`
   display: flex;
   align-items: center;
 
@@ -142,7 +196,7 @@ const ExitButton = styled.button`
   }
 `;
 
-const TemporalSaveBtn = styled(ExitButton)`
+const GrayButton = styled(BasicButton)`
   padding: 0.5rem 1rem;
   background-color: #e3e3e3;
   &:hover {
@@ -151,7 +205,7 @@ const TemporalSaveBtn = styled(ExitButton)`
   }
 `;
 
-const SaveBtn = styled(ExitButton)`
+const GreenButton = styled(BasicButton)`
   padding: 0.5rem 1rem;
   background-color: rgb(18, 184, 134);
   color: white;
@@ -159,6 +213,25 @@ const SaveBtn = styled(ExitButton)`
     opacity: 0.6;
     transform: none;
   }
+
+  &:disabled {
+    cursor: not-allowed;
+  }
+`;
+
+const ModalContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  padding: 3%;
+  border-radius: 18px;
+  box-shadow: 5px 5px 16px 5px lightgray;
+
+  width: 40%;
+  height: 60%;
+
+  background-color: white;
 `;
 
 export default WritePage;

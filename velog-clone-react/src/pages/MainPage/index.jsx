@@ -31,7 +31,8 @@ function MainPage() {
     };
   };
 
-  const showArticle = () => currentList.map((article) => <Article key={`${article.title}_${article.date}`} articleInfo={article} />);
+  const showArticle = () => currentList
+    .map((article) => <Article key={article.id} articleInfo={article} />).reverse();
 
   useEffect(() => {
     if (location && location.pathname !== currentActive) setCurrentActive(location.pathname);

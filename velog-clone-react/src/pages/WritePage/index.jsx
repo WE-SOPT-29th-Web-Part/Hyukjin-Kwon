@@ -4,6 +4,8 @@ import styled from 'styled-components';
 import { Delimiter, Tag } from 'components/common';
 import useInput from 'core/useInput';
 
+import { BsArrowLeftShort } from 'react-icons/bs';
+
 const summaryValidate = {
   warnText: '150자 이하만 입력 가능합니다.',
   validateRegex: /^.{0,150}$/s,
@@ -43,6 +45,18 @@ function WritePage() {
         <SummaryInput {...summary} placeholder="Show me what you got (150자 이하)" />
         {!isValid && <WarnText />}
       </Wrapper>
+      <Footer>
+        <ExitButton>
+          <>
+            <BsArrowLeftShort />
+            <span>나가기</span>
+          </>
+        </ExitButton>
+        <ButtonWrapper>
+          <TemporalSaveBtn>임시저장</TemporalSaveBtn>
+          <SaveBtn>출간하기</SaveBtn>
+        </ButtonWrapper>
+      </Footer>
     </Container>
   );
 }
@@ -55,7 +69,6 @@ const Container = styled.main`
 
   display: flex;
   flex-direction: column;
-
 `;
 
 const TitleInput = styled.input`
@@ -93,6 +106,59 @@ const Wrapper = styled.div`
   margin-top: 3%;
   position: relative;
   flex: 1;
+`;
+
+const Footer = styled.footer`
+  width: 50%;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  padding:1rem 2%;
+
+  display: flex;
+  justify-content: space-between;
+
+  box-shadow: 3px 3px 5px 3px lightgray;
+`;
+
+const ButtonWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+`;
+
+const ExitButton = styled.button`
+  display: flex;
+  align-items: center;
+
+  border: none;
+  border-radius: 4px;
+  outline: 0;
+  background-color: transparent;
+  font-size: 1.2rem;
+
+  &:hover {
+    transform: scale(1.1);
+  }
+`;
+
+const TemporalSaveBtn = styled(ExitButton)`
+  padding: 0.5rem 1rem;
+  background-color: #e3e3e3;
+  &:hover {
+    opacity: 0.6;
+    transform: none;
+  }
+`;
+
+const SaveBtn = styled(ExitButton)`
+  padding: 0.5rem 1rem;
+  background-color: rgb(18, 184, 134);
+  color: white;
+  &:hover {
+    opacity: 0.6;
+    transform: none;
+  }
 `;
 
 export default WritePage;

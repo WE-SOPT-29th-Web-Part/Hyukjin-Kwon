@@ -1,8 +1,9 @@
 import styled from 'styled-components';
 
 export const Delimiter = styled.hr`
-  width: 100%;
-  border: 1px solid rgb(209, 209, 209);
+  width: ${(props) => props.width || '100%'};
+  height: ${(props) => props.height || 'initial'};
+  border: 1px solid ${(props) => props.color || 'rgb(209, 209, 209)'};
   margin: 3% 0;
 `;
 

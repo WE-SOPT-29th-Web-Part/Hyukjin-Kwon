@@ -13,4 +13,8 @@ export const Tag = styled.span`
   background-color: rgb(241, 243, 245);
   color: rgb(18, 184, 134);
   border-radius: 16px;
+
+  &:hover {
+    cursor: pointer;
+  }
 `;

@@ -11,7 +11,8 @@ function useInput(validate) {
 
   if (!validate) {
     const onChange = (e) => setValue(e.target.value);
-    return { value, onChange };
+    const initialize = () => setValue('');
+    return { value, onChange, initialize };
   }
 
   const { validateRegex, warnText } = validate;

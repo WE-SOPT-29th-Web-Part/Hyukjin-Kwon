@@ -14,7 +14,7 @@ const summaryValidate = {
 };
 
 const imageExts = '(png|svg|gif|jpg|jpeg)';
-const imageExtRegex = new RegExp(`^[^.]+[.]${imageExts}$`);
+const imageExtRegex = new RegExp(`[.]${imageExts}$`);
 
 const encodeFileToBase64 = (fileBlob) => {
   const reader = new FileReader();

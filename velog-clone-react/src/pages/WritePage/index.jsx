@@ -13,12 +13,25 @@ const summaryValidate = {
   validateRegex: /^.{0,150}$/s,
 };
 
+const imageExts = '(png|svg|gif|jpg|jpeg)';
+const imageExtRegex = new RegExp(`^[^.]+[.]${imageExts}$`);
+
+const encodeFileToBase64 = (fileBlob) => {
+  const reader = new FileReader();
+  reader.readAsDataURL(fileBlob);
+  return new Promise((resolve) => {
+    reader.onload = () => resolve(reader.result);
+  });
+};
+
 function WritePage() {
   const navigator = useNavigate();
 
   const titleInput = useInput();
   const tagInput = useInput();
   const descInput = useInput();
+  const [fileInput, setFileInput] = useState();
+  const handleFile = (e) => setFileInput(e.target.files[0]);
 
   const { validInfo, ...summary } = useInput(summaryValidate);
   const { isValid, warnText: WarnText } = validInfo;
@@ -39,12 +52,19 @@ function WritePage() {
   };
   const removeTag = (targetTag) => setTagList(tagList.filter((tag) => tag !== targetTag));
   const publishArticle = async () => {
+    if (!validInfo.isValid) return;
     if (summary.value && isAllInputFilled()) {
-      await postArticle({
+      let articleInfo = {
         title: titleInput.value,
         summary: summary.value,
         tags: tagList,
-      });
+      };
+
+      if (fileInput) {
+        const encodedThumbnail = await encodeFileToBase64(fileInput);
+        articleInfo = { ...articleInfo, thumbnail: encodedThumbnail };
+      }
+      await postArticle(articleInfo);
       navigator('/');
     }
   };
@@ -78,14 +98,20 @@ function WritePage() {
       <Modal isOpen={isModalOpen}>
         <ModalContent>
           <h3>포스트 미리보기</h3>
-          <ThumbnailInput type="file" />
+          <ThumbnailInput
+            type="file"
+            onChange={(e) => {
+              if (e.target.files[0].name.match(imageExtRegex)) handleFile(e);
+              else e.target.files = null;
+            }}
+          />
           <Wrapper>
             <SummaryInput {...summary} placeholder="당신의 포스트를 짧게 소개해주세요. (150자 이하)" />
             {!isValid && <WarnText />}
           </Wrapper>
           <ButtonWrapper>
             <GrayButton onClick={() => setIsModalOpen(false)}>취소</GrayButton>
-            <GreenButton onClick={publishArticle}>출간하기</GreenButton>
+            <GreenButton disabled={!validInfo.isValid} onClick={publishArticle}>출간하기</GreenButton>
           </ButtonWrapper>
         </ModalContent>
       </Modal>

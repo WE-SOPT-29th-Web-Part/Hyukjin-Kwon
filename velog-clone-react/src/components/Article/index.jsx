@@ -5,11 +5,16 @@ import { Tag } from 'components/common';
 
 function Article({ articleInfo }) {
   const {
-    title, summary = '', tags = [], date = '',
+    title, summary = '', tags = [], date = '', thumbnail = '',
   } = articleInfo;
 
   return (
     <StyledArticle>
+      {thumbnail && (
+        <ThumbnailWrapper>
+          <img src={thumbnail} alt="article-thumbnail" />
+        </ThumbnailWrapper>
+      )}
       <Title>{title}</Title>
       <Summary>{summary}</Summary>
       <TagList>
@@ -27,6 +32,22 @@ const StyledArticle = styled.article`
 
   padding-bottom: 3rem;
   border-bottom: 2px solid lightgray;
+`;
+
+const ThumbnailWrapper = styled.div`
+  position: relative;
+  overflow: hidden;
+  padding-top: 50%;
+
+  & > img {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 60%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+  }
 `;
 
 const Title = styled.h2`
@@ -55,6 +76,7 @@ Article.propTypes = {
     summary: PropTypes.string,
     tags: PropTypes.arrayOf(PropTypes.string),
     date: PropTypes.string,
+    thumbnail: PropTypes.string,
   }).isRequired,
 };
 

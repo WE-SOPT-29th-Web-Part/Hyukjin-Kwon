@@ -76,14 +76,13 @@ function MainPage() {
 }
 
 const Container = styled.main`
-  width: 1280px;
+  width: 100%;
   height: 100%;
-
   margin: 0 auto;
 `;
 
 const TypeSelector = styled.div`
-  width: 800px;
+  width: 80%;
   margin: 5% auto;
   display: flex;
   justify-content: center;

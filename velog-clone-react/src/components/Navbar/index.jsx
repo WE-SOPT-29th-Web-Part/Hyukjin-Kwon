@@ -44,7 +44,7 @@ function Navbar() {
 const StyledNavbar = styled.header`
   display: flex;
   justify-content: space-between;
-  padding-top: 1%;
+  padding: 1% 10%;
 `;
 
 const Logo = styled.span`

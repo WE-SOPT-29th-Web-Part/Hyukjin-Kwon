@@ -1,0 +1,111 @@
+.profile {
+  background-color: rgb(80, 80, 80);
+
+  position: relative;
+
+  width: 30%;
+
+  border-radius: 18px;
+  box-shadow: 5px 5px 15px 5px rgb(126, 126, 126);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+
+  padding: 1rem 0;
+
+  &__username {
+    text-align: center;
+    & h2 {
+      color: white;
+    }
+
+    & h3 {
+      font-size: 0.9rem;
+      color: rgb(148, 148, 148);
+    }
+  }
+
+  &__followInfo {
+    display: flex;
+    gap: 1rem;
+    list-style: none;
+    padding: 0;
+
+    & > li {
+      font-family: "yj";
+      color: white;
+
+      &:nth-child(1):before {
+        content: "😎";
+      }
+      &:nth-child(2):before {
+        content: "🤩";
+      }
+    }
+  }
+
+  &__thumbnail {
+    display: flex;
+    justify-content: center;
+    & > img {
+      border-radius: 50%;
+      overflow: hidden;
+      max-width: 50%;
+    }
+  }
+
+  &__closeBtn {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+
+    background-color: transparent;
+    color: white;
+    border: 0;
+    font-size: 1.2rem;
+
+    &:hover {
+      cursor: pointer;
+      transform: scale(1.1);
+    }
+
+    z-index: 2;
+  }
+
+  &__intro {
+    padding: 0 1rem;
+    text-align: center;
+    color: white;
+    font-family: "yj";
+    font-size: 0.9rem;
+  }
+
+  &__footer {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+
+    & > * {
+      color: black;
+      background-color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 18px;
+      border: none;
+      text-decoration: none;
+      font-family: "yj";
+
+      font-size: 0.8rem;
+
+      &:hover {
+        cursor: pointer;
+        transform: scale(1.1);
+      }
+    }
+  }
+
+  & > hr {
+    width: 100%;
+  }
+}

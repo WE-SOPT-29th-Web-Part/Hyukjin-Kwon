@@ -1,9 +1,11 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-
+import { IUserInfo } from '../ProfileHandler';
 import './index.scss';
+interface IProfileProps {
+  toggle: () => void;
+  userInfo: IUserInfo;
+}
 
-function Profile(props) {
+function Profile(props: IProfileProps) {
   const { toggle, userInfo } = props;
   const { thumbnail, nickname, userId, following, followers, githubUrl, introduce } = userInfo;
 
@@ -40,18 +42,5 @@ function Profile(props) {
     </article>
   );
 }
-
-Profile.propTypes = {
-  toggle: PropTypes.func.isRequired,
-  userInfo: PropTypes.shape({
-    thumbnail: PropTypes.string,
-    nickname: PropTypes.string,
-    userId: PropTypes.string,
-    following: PropTypes.number,
-    followers: PropTypes.number,
-    githubUrl: PropTypes.string,
-    introduce: PropTypes.string,
-  }).isRequired,
-};
 
 export default Profile;

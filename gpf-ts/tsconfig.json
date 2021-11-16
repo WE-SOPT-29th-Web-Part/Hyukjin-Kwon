@@ -14,14 +14,16 @@
     "strict": true,
     "forceConsistentCasingInFileNames": true,
     "noFallthroughCasesInSwitch": true,
-    "module": "es6",
+    "module": "esnext",
     "moduleResolution": "Node",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
     "noImplicitAny": true,
-    "typeRoots": ["src/Types"]
+    "typeRoots": [
+      "src/Types"
+    ]
   },
   "include": [
     "src"

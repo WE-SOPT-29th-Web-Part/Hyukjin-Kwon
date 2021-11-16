@@ -1,5 +1,3 @@
-import React from 'react';
-
 import ProfileFinder from 'Components/ProfileFinder';
 
 function App() {

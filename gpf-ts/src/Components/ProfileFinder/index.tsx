@@ -7,7 +7,7 @@ import bgBottom from 'Assets/telescope-bg-bottom.png';
 import './index.scss';
 
 function ProfileFinder() {
-  const containerRef = useRef();
+  const containerRef = useRef<HTMLElement>(null);
   return (
     <main className="profileFinder" ref={containerRef}>
       <h1>니 깃허브 쩔더라?</h1>

@@ -1,0 +1,135 @@
+import { useState, useEffect } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
+
+import Navbar from 'components/Navbar';
+import UserBoard from 'components/UserBoard';
+import Article from 'components/Article';
+import Loader from 'components/Loader';
+
+import { getArticle, getSeries } from 'core/api';
+
+const ROOT = '/';
+const SERIES = '/series';
+
+export interface IArticleInfo {
+  id: string;
+  title: string;
+  summary: string;
+  tags: string[];
+  date: string;
+  thumbnail?: string | null;
+}
+
+function MainPage() {
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [currentList, setCurrentList] = useState<IArticleInfo[]>([]);
+  const [currentActive, setCurrentActive] = useState<string>(ROOT);
+  const location = useLocation();
+  const navigator = useNavigate();
+
+  const getNextActive = (current: string) => (current === ROOT ? SERIES : ROOT);
+  const isActiveWithSeries = () => currentActive === SERIES;
+
+  const handleClickArticleType = (nowActive: string) => {
+    const nextActive = getNextActive(nowActive);
+
+    return () => {
+      setCurrentActive(nextActive);
+      navigator(nextActive);
+    };
+  };
+
+  const showArticle = () => currentList?.map((article) => <Article key={article.id} articleInfo={article} />).reverse();
+
+  useEffect(() => {
+    if (location && location.pathname !== currentActive) setCurrentActive(location.pathname);
+  }, [currentActive, location]);
+
+  useEffect(() => {
+    async function fetchCurrentList() {
+      setIsLoading(true);
+      if (currentActive === ROOT) setCurrentList(await getArticle());
+      else setCurrentList(await getSeries());
+      setIsLoading(false);
+    }
+    fetchCurrentList();
+  }, [currentActive]);
+
+  return (
+    <Container>
+      <Navbar />
+      <UserBoard />
+      <TypeSelector>
+        <ArticleType isActive={!isActiveWithSeries()} onClick={handleClickArticleType(SERIES)}>
+          글
+        </ArticleType>
+        <ArticleType isActive={isActiveWithSeries()} onClick={handleClickArticleType(ROOT)}>
+          시리즈
+        </ArticleType>
+      </TypeSelector>
+      <ArticleList>
+        {isLoading && <Loader width="50px" />}
+        {!isLoading && currentList.length && showArticle()}
+      </ArticleList>
+    </Container>
+  );
+}
+
+const Container = styled.main`
+  width: 100%;
+  height: 100%;
+  margin: 0 auto;
+`;
+
+const TypeSelector = styled.div`
+  width: 80%;
+  margin: 5% auto;
+  display: flex;
+  justify-content: center;
+`;
+
+const ArticleType = styled.button<{ isActive: boolean }>`
+  position: relative;
+  padding: 1rem 2rem;
+  background-color: transparent;
+
+  font-weight: 500;
+  font-size: 1.2rem;
+
+  &::after {
+    content: '';
+    height: 2px;
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+
+    width: 0;
+    background-color: rgb(18, 184, 134);
+    transition: width 300ms ease-in;
+  }
+
+  ${(props) =>
+    props.isActive
+      ? `
+    color: rgb(18, 184, 134);
+    
+    &::after {
+      width: 100%;
+      transition: width 300ms ease-in;
+    }
+    
+  `
+      : ''}
+`;
+
+const ArticleList = styled.section`
+  width: 800px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+`;
+
+export default MainPage;

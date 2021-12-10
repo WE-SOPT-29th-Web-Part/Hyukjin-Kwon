@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 export const Delimiter = styled.hr`
@@ -16,5 +17,40 @@ export const Tag = styled.span`
 
   &:hover {
     cursor: pointer;
+  }
+`;
+
+export const ImageWrapper = (props) => {
+  const { ratio, children } = props;
+  return (
+    <StyledWrapper ratio={ratio}>
+      {children}
+    </StyledWrapper>
+  );
+};
+
+ImageWrapper.propTypes = {
+  ratio: PropTypes.number,
+  children: PropTypes.node,
+};
+
+ImageWrapper.defaultProps = {
+  ratio: 62.5,
+  children: null,
+};
+
+const StyledWrapper = styled.div`
+  position: relative;
+  overflow: hidden;
+  padding-top: ${({ ratio }) => ratio}%;
+
+  & > img {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 60%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
   }
 `;

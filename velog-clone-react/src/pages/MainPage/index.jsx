@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, Outlet } from 'react-router-dom';
 import styled from 'styled-components';
 
 import Navbar from 'components/Navbar';
@@ -66,6 +66,7 @@ function MainPage() {
           시리즈
         </ArticleType>
       </TypeSelector>
+      <Outlet />
       <ArticleList>
         {isLoading && <Loader width="50px" />}
         {!isLoading && currentList && showArticle()}

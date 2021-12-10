@@ -1,10 +1,11 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { Delimiter, Tag } from 'components/common';
 import Modal from 'components/Modal';
-import { postArticle } from 'core/api';
+import { api, imageApi, postArticle } from 'core/api';
 import useInput from 'core/useInput';
 import { BsArrowLeftShort } from 'react-icons/bs';
 
@@ -16,16 +17,9 @@ const summaryValidate = {
 const imageExts = '(png|svg|gif|jpg|jpeg)';
 const imageExtRegex = new RegExp(`[.]${imageExts}$`);
 
-const encodeFileToBase64 = (fileBlob) => {
-  const reader = new FileReader();
-  reader.readAsDataURL(fileBlob);
-  return new Promise((resolve) => {
-    reader.onload = () => resolve(reader.result);
-  });
-};
-
-function WritePage() {
+function WritePage({ mode }) {
   const navigator = useNavigate();
+  const { id } = useParams();
 
   const titleInput = useInput();
   const tagInput = useInput();
@@ -58,16 +52,38 @@ function WritePage() {
         title: titleInput.value,
         summary: summary.value,
         tags: tagList,
+        body: descInput.value,
       };
 
       if (fileInput) {
-        const encodedThumbnail = await encodeFileToBase64(fileInput);
-        articleInfo = { ...articleInfo, thumbnail: encodedThumbnail };
+        const imageForm = new FormData();
+        imageForm.append('file', fileInput);
+
+        const imageResponse = await imageApi.post('/', imageForm);
+        articleInfo = { ...articleInfo, thumbnail: imageResponse.data.url };
       }
-      await postArticle(articleInfo);
+
+      if (mode === 'edit') await api.patch(`/article/${id}`, articleInfo);
+      else await postArticle(articleInfo);
+
       navigator('/');
     }
   };
+
+  useEffect(() => {
+    async function initializeInputValue() {
+      const { data } = await api.get(`/article/${id}`);
+      const {
+        body, title, tags, summary: initialSumamry,
+      } = data;
+      titleInput.initialize(title);
+      descInput.initialize(body);
+      summary.initialize(initialSumamry);
+      setTagList(tags);
+    }
+    if (mode === 'edit') initializeInputValue();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [mode, id]);
 
   return (
     <Container>
@@ -140,6 +156,7 @@ const TitleInput = styled.input`
 
 const TagList = styled.form`
   display: flex;
+  flex-wrap: wrap;
   gap: 0.5rem;
 `;
 
@@ -259,5 +276,13 @@ const ModalContent = styled.div`
 
   background-color: white;
 `;
+
+WritePage.propTypes = {
+  mode: PropTypes.oneOf(['edit, write']),
+};
+
+WritePage.defaultProps = {
+  mode: 'write',
+};
 
 export default WritePage;

@@ -89,15 +89,15 @@ const UserMenu = styled.div`
 
   & > img {
     border-radius: 50%;
-  overflow: hidden;
+    overflow: hidden;
 
-  width: 2.5rem;
-  height: 2.5rem;
+    width: 2.5rem;
+    height: 2.5rem;
   }
 
   & > svg {
     width: 1.3rem;
-  height: 1.3rem;
+    height: 1.3rem;
   }
 
   &:hover {

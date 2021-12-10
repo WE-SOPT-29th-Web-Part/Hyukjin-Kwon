@@ -33,12 +33,12 @@ function Article({ articleInfo }) {
 
 const StyledArticle = styled.article`
   position: relative;
-  /* width: 800px; */
-  width: fit-content;
+  width: 50%;
   display: flex;
   flex-direction: column;
 
   padding-bottom: 3rem;
+  margin-bottom: 3rem;
   border-bottom: 2px solid lightgray;
 
   &:hover {

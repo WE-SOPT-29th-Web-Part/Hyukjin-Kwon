@@ -8,6 +8,7 @@ import Modal from 'components/Modal';
 import { api, imageApi, postArticle } from 'core/api';
 import useInput from 'core/useInput';
 import { BsArrowLeftShort } from 'react-icons/bs';
+import encodeFileToBase64 from 'utils/encodeBase64';
 
 const summaryValidate = {
   warnText: '150자 이하만 입력 가능합니다.',
@@ -25,7 +26,11 @@ function WritePage({ mode }) {
   const tagInput = useInput();
   const descInput = useInput();
   const [fileInput, setFileInput] = useState();
-  const handleFile = (e) => setFileInput(e.target.files[0]);
+  const [currentThumbnail, setCurrentThumbnail] = useState(null);
+  const handleFile = (e) => {
+    setFileInput(e.target.files[0]);
+    encodeFileToBase64(e.target.files[0], setCurrentThumbnail);
+  };
 
   const { validInfo, ...summary } = useInput(summaryValidate);
   const { isValid, warnText: WarnText } = validInfo;
@@ -74,12 +79,13 @@ function WritePage({ mode }) {
     async function initializeInputValue() {
       const { data } = await api.get(`/article/${id}`);
       const {
-        body, title, tags, summary: initialSumamry,
+        body, title, tags, summary: initialSumamry, thumbnail,
       } = data;
       titleInput.initialize(title);
       descInput.initialize(body);
       summary.initialize(initialSumamry);
       setTagList(tags);
+      setCurrentThumbnail(thumbnail);
     }
     if (mode === 'edit') initializeInputValue();
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -114,13 +120,18 @@ function WritePage({ mode }) {
       <Modal isOpen={isModalOpen}>
         <ModalContent>
           <h3>포스트 미리보기</h3>
-          <ThumbnailInput
-            type="file"
-            onChange={(e) => {
-              if (e.target.files[0].name.match(imageExtRegex)) handleFile(e);
-              else e.target.files = null;
-            }}
-          />
+          <ThumbnailWrapper>
+            <ThumbnailInput
+              type="file"
+              onChange={(e) => {
+                if (e.target.files[0].name.match(imageExtRegex)) handleFile(e);
+                else e.target.files = null;
+              }}
+            />
+            <ThumbnailPreview>
+              {currentThumbnail ? <img src={currentThumbnail} alt="img-thumbnail" /> : 'NO IMAGE'}
+            </ThumbnailPreview>
+          </ThumbnailWrapper>
           <Wrapper>
             <SummaryInput {...summary} placeholder="당신의 포스트를 짧게 소개해주세요. (150자 이하)" />
             {!isValid && <WarnText />}
@@ -275,6 +286,24 @@ const ModalContent = styled.div`
   height: 60%;
 
   background-color: white;
+`;
+
+const ThumbnailWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem;
+  align-items: center;
+`;
+
+const ThumbnailPreview = styled.div`
+  border-radius: 18px;
+  box-shadow: 5px 5px 10px 5px lightgray;
+  min-width: fit-content;
+  & > img {
+    max-width: 100%;
+    max-height: 150px;
+  }
 `;
 
 WritePage.propTypes = {

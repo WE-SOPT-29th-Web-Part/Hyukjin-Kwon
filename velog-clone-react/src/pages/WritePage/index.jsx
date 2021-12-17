@@ -1,12 +1,14 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { Delimiter, Tag } from 'components/common';
 import Modal from 'components/Modal';
-import { postArticle } from 'core/api';
+import { api, imageApi, postArticle } from 'core/api';
 import useInput from 'core/useInput';
 import { BsArrowLeftShort } from 'react-icons/bs';
+import encodeFileToBase64 from 'utils/encodeBase64';
 
 const summaryValidate = {
   warnText: '150자 이하만 입력 가능합니다.',
@@ -16,22 +18,19 @@ const summaryValidate = {
 const imageExts = '(png|svg|gif|jpg|jpeg)';
 const imageExtRegex = new RegExp(`[.]${imageExts}$`);
 
-const encodeFileToBase64 = (fileBlob) => {
-  const reader = new FileReader();
-  reader.readAsDataURL(fileBlob);
-  return new Promise((resolve) => {
-    reader.onload = () => resolve(reader.result);
-  });
-};
-
-function WritePage() {
+function WritePage({ mode }) {
   const navigator = useNavigate();
+  const { id } = useParams();
 
   const titleInput = useInput();
   const tagInput = useInput();
   const descInput = useInput();
   const [fileInput, setFileInput] = useState();
-  const handleFile = (e) => setFileInput(e.target.files[0]);
+  const [currentThumbnail, setCurrentThumbnail] = useState(null);
+  const handleFile = (e) => {
+    setFileInput(e.target.files[0]);
+    encodeFileToBase64(e.target.files[0], setCurrentThumbnail);
+  };
 
   const { validInfo, ...summary } = useInput(summaryValidate);
   const { isValid, warnText: WarnText } = validInfo;
@@ -58,16 +57,39 @@ function WritePage() {
         title: titleInput.value,
         summary: summary.value,
         tags: tagList,
+        body: descInput.value,
       };
 
       if (fileInput) {
-        const encodedThumbnail = await encodeFileToBase64(fileInput);
-        articleInfo = { ...articleInfo, thumbnail: encodedThumbnail };
+        const imageForm = new FormData();
+        imageForm.append('file', fileInput);
+
+        const imageResponse = await imageApi.post('/', imageForm);
+        articleInfo = { ...articleInfo, thumbnail: imageResponse.data.url };
       }
-      await postArticle(articleInfo);
+
+      if (mode === 'edit') await api.patch(`/article/${id}`, articleInfo);
+      else await postArticle(articleInfo);
+
       navigator('/');
     }
   };
+
+  useEffect(() => {
+    async function initializeInputValue() {
+      const { data } = await api.get(`/article/${id}`);
+      const {
+        body, title, tags, summary: initialSumamry, thumbnail,
+      } = data;
+      titleInput.initialize(title);
+      descInput.initialize(body);
+      summary.initialize(initialSumamry);
+      setTagList(tags);
+      setCurrentThumbnail(thumbnail);
+    }
+    if (mode === 'edit') initializeInputValue();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [mode, id]);
 
   return (
     <Container>
@@ -98,13 +120,18 @@ function WritePage() {
       <Modal isOpen={isModalOpen}>
         <ModalContent>
           <h3>포스트 미리보기</h3>
-          <ThumbnailInput
-            type="file"
-            onChange={(e) => {
-              if (e.target.files[0].name.match(imageExtRegex)) handleFile(e);
-              else e.target.files = null;
-            }}
-          />
+          <ThumbnailWrapper>
+            <ThumbnailInput
+              type="file"
+              onChange={(e) => {
+                if (e.target.files[0].name.match(imageExtRegex)) handleFile(e);
+                else e.target.files = null;
+              }}
+            />
+            <ThumbnailPreview>
+              {currentThumbnail ? <img src={currentThumbnail} alt="img-thumbnail" /> : 'NO IMAGE'}
+            </ThumbnailPreview>
+          </ThumbnailWrapper>
           <Wrapper>
             <SummaryInput {...summary} placeholder="당신의 포스트를 짧게 소개해주세요. (150자 이하)" />
             {!isValid && <WarnText />}
@@ -140,6 +167,7 @@ const TitleInput = styled.input`
 
 const TagList = styled.form`
   display: flex;
+  flex-wrap: wrap;
   gap: 0.5rem;
 `;
 
@@ -259,5 +287,31 @@ const ModalContent = styled.div`
 
   background-color: white;
 `;
+
+const ThumbnailWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem;
+  align-items: center;
+`;
+
+const ThumbnailPreview = styled.div`
+  border-radius: 18px;
+  box-shadow: 5px 5px 10px 5px lightgray;
+  min-width: fit-content;
+  & > img {
+    max-width: 100%;
+    max-height: 150px;
+  }
+`;
+
+WritePage.propTypes = {
+  mode: PropTypes.oneOf(['edit, write']),
+};
+
+WritePage.defaultProps = {
+  mode: 'write',
+};
 
 export default WritePage;

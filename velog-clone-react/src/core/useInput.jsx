@@ -9,9 +9,10 @@ function useInput(validate) {
     warnText: null,
   });
 
+  const initialize = (initValue) => setValue(initValue ?? '');
+
   if (!validate) {
     const onChange = (e) => setValue(e.target.value);
-    const initialize = () => setValue('');
     return { value, onChange, initialize };
   }
 
@@ -32,7 +33,9 @@ function useInput(validate) {
     }
   };
 
-  return { value, onChange, validInfo };
+  return {
+    value, onChange, validInfo, initialize,
+  };
 }
 
 const StyledWarnText = styled.span`

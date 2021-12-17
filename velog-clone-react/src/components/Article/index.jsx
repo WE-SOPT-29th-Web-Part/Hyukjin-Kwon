@@ -1,19 +1,25 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import { Tag } from 'components/common';
+import { Tag, ImageWrapper } from 'components/common';
+import { useNavigate } from 'react-router-dom';
 
 function Article({ articleInfo }) {
+  const navigator = useNavigate();
   const {
-    title, summary = '', tags = [], date = '', thumbnail = '',
+    title, summary = '', tags = [], date = '', thumbnail = '', id,
   } = articleInfo;
 
+  const onClickArticle = () => {
+    navigator(`/article/${id}`);
+  };
+
   return (
-    <StyledArticle>
+    <StyledArticle onClick={onClickArticle}>
       {thumbnail && (
-        <ThumbnailWrapper>
+        <ImageWrapper ratio={45}>
           <img src={thumbnail} alt="article-thumbnail" />
-        </ThumbnailWrapper>
+        </ImageWrapper>
       )}
       <Title>{title}</Title>
       <Summary>{summary}</Summary>
@@ -26,27 +32,18 @@ function Article({ articleInfo }) {
 }
 
 const StyledArticle = styled.article`
-  width: 800px;
+  position: relative;
+  width: 50%;
   display: flex;
   flex-direction: column;
 
   padding-bottom: 3rem;
+  margin-bottom: 3rem;
   border-bottom: 2px solid lightgray;
-`;
 
-const ThumbnailWrapper = styled.div`
-  position: relative;
-  overflow: hidden;
-  padding-top: 50%;
-
-  & > img {
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    width: 60%;
-    height: 100%;
-    display: block;
-    object-fit: cover;
+  &:hover {
+    cursor: pointer;
+    opacity: 0.7;
   }
 `;
 
@@ -77,6 +74,7 @@ Article.propTypes = {
     tags: PropTypes.arrayOf(PropTypes.string),
     date: PropTypes.string,
     thumbnail: PropTypes.string,
+    id: PropTypes.string,
   }).isRequired,
 };
 

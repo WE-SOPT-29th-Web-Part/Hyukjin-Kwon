@@ -1,7 +1,14 @@
 import axios from 'axios';
 
-const api = axios.create({
-  baseURL: 'http://localhost:4000',
+export const api = axios.create({
+  baseURL: 'http://localhost:5000/api',
+});
+
+export const imageApi = axios.create({
+  baseURL: 'http://localhost:5000/api/image',
+  headers: {
+    'Content-type': 'multipart/form-data',
+  },
 });
 
 export const getArticle = async () => {
@@ -17,7 +24,7 @@ export const getArticle = async () => {
 
 export const getSeries = async () => {
   try {
-    const result = await api.get('/series');
+    const result = await api.get('/article');
     const { data } = result;
 
     return data;
@@ -27,14 +34,9 @@ export const getSeries = async () => {
 };
 
 export const postArticle = async (articleData) => {
-  const today = new Date().toLocaleDateString('ko-kr')
-    .replace('.', '년')
-    .replace('.', '월')
-    .replace('.', '일');
   try {
     await api.post('/article', {
       ...articleData,
-      date: today,
     });
   } catch (error) {
     throw new Error('Failed to Post Article.');

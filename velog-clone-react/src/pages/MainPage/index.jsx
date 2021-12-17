@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useState, useEffect, useRef } from 'react';
+import { useLocation, useNavigate, Outlet } from 'react-router-dom';
 import styled from 'styled-components';
 
 import Navbar from 'components/Navbar';
@@ -18,6 +18,7 @@ function MainPage() {
   const [currentActive, setCurrentActive] = useState(ROOT);
   const location = useLocation();
   const navigator = useNavigate();
+  const prevPathname = useRef(location.pathname);
 
   const getNextActive = (current) => (current === ROOT ? SERIES : ROOT);
   const isActiveWithSeries = () => currentActive === SERIES;
@@ -34,7 +35,10 @@ function MainPage() {
   const showArticle = () => currentList
     .map((article) => <Article key={article.id} articleInfo={article} />).reverse();
 
+  const scrollToTop = () => window.scrollTo(0, 0);
+
   useEffect(() => {
+    if (location && prevPathname !== location.pathname) scrollToTop();
     if (location && location.pathname !== currentActive) setCurrentActive(location.pathname);
   }, [currentActive, location]);
 
@@ -66,6 +70,7 @@ function MainPage() {
           시리즈
         </ArticleType>
       </TypeSelector>
+      <Outlet />
       <ArticleList>
         {isLoading && <Loader width="50px" />}
         {!isLoading && currentList && showArticle()}
